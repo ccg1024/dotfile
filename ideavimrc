@@ -1,0 +1,69 @@
+" idea的vim插件配置
+
+" 设置leader
+let mapleader = ","
+
+" marks 映射修改
+nnoremap ma mA
+nnoremap 'a 'A
+nnoremap ms mS
+nnoremap 's 'S
+nnoremap md mD
+nnoremap 'd 'D
+
+nnoremap <leader>d dd
+
+" 设置buffer或tab的标签切换
+nnoremap [b :bp<cr>
+nnoremap ]b :bn<cr>
+
+set hlsearch
+nnoremap <c-n> :nohl<cr>
+
+set mouse=a
+
+" 将当前单词全部大写
+inoremap <d-u> <esc>viw<s-u>
+inoremap <m-u> <esc>viw<s-u>
+
+""" Plugins ------
+set surround
+set easymotion
+set multiple-cursors
+set commentary
+set argtextobj
+set textobj-entire
+set ReplaceWithRegister
+
+""" Plugin settings ------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+""" Common settings ------
+set showmode
+set so=5
+set incsearch
+set nu
+
+""" Idea specific settings -----
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
+
+""" Mappings ----
+""" 有 action 标志的都是 idea 编辑器自己的功能
+map <leader>f <Plug>(easymotion-s)
+map <leader>e <Plug>(easymotion-f)
+
+map <leader>d <Action>(Debug)
+map <leader>r <Action>(RenameElement)
+map <leader>c <Action>(Stop)
+map <leader>z <Action>(ToggleDistractionFreeMode)
+
+map <leader>s <Action>(SelectInProjectView)
+map <leader>a <Action>(Annotate)
+map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+map <S-space> <Action>(GotoNextError)
+
+map <leader>b <Action>(ToggleLineBreakpoint)
+map <leader>o <Action>(FileStructurePopup)
+
