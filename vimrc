@@ -82,6 +82,8 @@ set guifont=Hack_Nerd_Font:h16
 set splitright
 set splitbelow
 set virtualedit=block
+"将系统剪切板与未命名寄存器对应
+set clipboard=unnamed
 "创建leader
 "在normal模式下：-,H,L,<space>,<cr>,<bs>是没有映射任何操作的
 let mapleader=" "
@@ -121,16 +123,6 @@ inoremap " ""<ESC>i
 "设置在插入模式中将当前单词全部大写
 "该设置只适合苹果 D 表示 command 按键
 inoremap <d-u> <esc>viw<s-u>ea
-
-"与系统剪切版同步，vim到复制是放入不同到寄存器中
-"但直接用y复制不会放入系统剪切板对应到寄存器中
-"需要手动指明，系统剪切板对应到是"与*表示到寄存器，通过 :reg 查看
-"例如在可视模式中，使用 "+y 就可以将内容复制到系统剪切板中
-"同理，使用 "+p 就可以将系统剪切板中的内容粘贴过来
-"命令中以及查看中，第一个字符都是双引号，应该是表示在操作寄存器
-":set clipboard=unnamed
-":set clipboard=unnamedplus
-
 
 """""""""""""""""""""""
 "vim-airline
