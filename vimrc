@@ -14,13 +14,14 @@ Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-fugitive'
 "Plug 'dense-analysis/ale'
 call plug#end()
-"通过 PlugInstall 安装
-"tabular最简单的用法，试图模型选中内容输入
-":Tabularize /charactor
-"其中charactor是用于数据对其的字符，如markdown表格就应该是|
-"Tab好像与Tablularize可以互换
+
+
+syntax enable
+set background=dark
 
 "为使用Gruvbox的颜色需要进行设置
 if (empty($TMUX))
@@ -31,22 +32,28 @@ if (empty($TMUX))
     set termguicolors
   endif
 endif
-colorscheme gruvbox
-set background=dark
-"设置颜色深浅分别为：soft, medium(default), hard
-let g:gruvbox_contrast_dark='medium'
 
-"让两边的滚轮边框消失
+"设置颜色深浅分别为：soft, medium(default), hard
+"gruvbox 的设置需要在 colorscheme 之前
+let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_sign_column='bg0'
+
+colorscheme gruvbox
+" highlight clear SignColumn
+" highlight! link SignColumn LineNr
+" autocmd ColorScheme * highlight! link SignColumn LineNr
+" 关于signcolum 颜色不对问题，通过设置gruvbox就可以解决
+
+
 set guioptions=
-syntax on
 set number
 set wrap
 set smartindent
+set autoindent
+set cindent
 "显示当前按下的操作符
 set showcmd
 set encoding=utf-8
-"开启文件类型检查
-filetype indent on
 "光标所在行高亮
 set cursorline
 "显示状态栏，0不显示，1多窗口显示，2都显示
@@ -57,7 +64,6 @@ set ruler
 set nobackup
 "不创建交换文件
 set noswapfile
-
 "设置TAB宽度，ts为tabstop缩写
 set ts=4
 "在编辑中，存在tab使用的地方一次性删除一个tab
@@ -74,19 +80,29 @@ set mouse=a
 "在81列显示竖线
 ""set colorcolumn=100
 set completeopt=longest,noinsert,menuone,noselect,preview
-
+set viewoptions=cursor,folds,slash,unix
+" set noshowmode
 "set guifont=DejaVu_Sans_Mono_for_Powerline:h16
 "set guifont=Hack_Nerd_Font_Mono:h16
-set guifont=Hack_Nerd_Font:h16
-
+set guifont=Hack_Nerd_Font:h18
 set splitright
 set splitbelow
 set virtualedit=block
-"将系统剪切板与未命名寄存器对应
-set clipboard=unnamed
+"使用双字宽显示，不然像 nerd font 的一些字体会显示不完全
+set ambiwidth=double
+set signcolumn=yes
 "创建leader
 "在normal模式下：-,H,L,<space>,<cr>,<bs>是没有映射任何操作的
 let mapleader=" "
+
+"开启文件类型检查
+filetype indent on
+
+"设置信号列的背景颜色
+" highlight SignColumn guibg=#282828
+" highlight SignColumn ctermbg=235
+" highlight SignColumn term=standout
+
 nnoremap ; :
 "重新加载配置文件
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -98,12 +114,6 @@ nnoremap ]b :bn<cr>
 nnoremap [t gT
 nnoremap ]t gt
 
-"设置标记跳转，m+a-z 表示标记当前位置
-" '+a-z 表示跳转到之前标记到位置
-"小写字母标记只能在当前文本上跳转，一旦窗口发生变化无法跳转
-"大写字母能够任意跳转，这里设置三个任意跳转的小写字母
-"使用 :marks 查看当前的标记内容以及一些系统自带的标记 
-"通过 :delmarks a b c 能够删除 a b c 的标记位置
 nnoremap ma mA
 nnoremap ms mS
 nnoremap md mD
@@ -114,15 +124,31 @@ nnoremap 'd 'D
 "关闭当前查找的高亮
 nnoremap <c-n> :nohl<cr>
 "设置括号自动补全的映射
-inoremap ( ()<ESC>i
-inoremap { {}<ESC>i
-inoremap [ []<ESC>i
-inoremap ' ''<ESC>i
-inoremap " ""<ESC>i
+"使用插件auto-pairs实现
+" inoremap ( ()<ESC>i
+" inoremap { {}<ESC>i
+" inoremap [ []<ESC>i
+" inoremap ' ''<ESC>i
+" inoremap " ""<ESC>i
 
+inoremap jj <esc>
 "设置在插入模式中将当前单词全部大写
 "该设置只适合苹果 D 表示 command 按键
 inoremap <d-u> <esc>viw<s-u>ea
+
+"与系统剪切版同步，vim到复制是放入不同到寄存器中
+"但直接用y复制不会放入系统剪切板对应到寄存器中
+"需要手动指明，系统剪切板对应到是"与*表示到寄存器，通过 :reg 查看
+"例如在可视模式中，使用 "+y 就可以将内容复制到系统剪切板中
+"同理，使用 "+p 就可以将系统剪切板中的内容粘贴过来
+"命令中以及查看中，第一个字符都是双引号，应该是表示在操作寄存器
+"set clipboard=unnamed
+"set clipboard=unnamedplus
+"上面内容为百度内容，但macvim开启有时会出现y复制但那如与p粘贴的内容不一致w问题
+"根据官网文档，y,d,x,c,s 的操作会将内容放入 unameed 寄存器。所以开启以下s设置
+"就同步系统剪切板
+set clipboard=unnamed
+
 
 """""""""""""""""""""""
 "vim-airline
@@ -137,22 +163,28 @@ let g:airline#extensions#tabline#left_alt_seq='❯'
 let g:airline#extensions#tabline#right_seq='◀'
 let g:ariline#extensions#tabline#right_alt_seq='❮'
 let g:airline_symbols.linenr='¶'
-let g:airline_symbols.branch='⎇'
+" need other plug(vim-fugitive) to show branch symbol.
+let g:airline_symbols.branch=''
+let g:airline_symbols.readonly="\ue0a2"
 let g:airline#extensions#tabline#buffer_nr_show=1
 let g:airline#extensions#tabline#formatter='default'
 let g:airline_theme='gruvbox'
+" show the number of change / delete / add
+let g:airline#extensions#hunks#enabled=1
+" show the branch symbol
+let g:airline#extensions#branch#enabled=1
 
 """""""""""""""""""""""
 "vim-markdown
 """""""""""""""""""""""
 "取消markdown的折叠
-:let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_folding_disabled=1
 
 """""""""""""""""""""""
 "nerdtree
 """""""""""""""""""""""
 "开启或关闭nerdtree目录导航插件
-:nnoremap <leader>n :NERDTreeToggle<cr>
+nnoremap <leader>n :NERDTreeToggle<cr>
 
 
 
@@ -162,6 +194,12 @@ let g:airline_theme='gruvbox'
 set hidden
 set updatetime=100
 set shortmess+=c
+
+" if has("nvim-0.5.0") || has("patch-8.1.1564")
+"     set signcolumn=number
+" else
+"     set signcolumn=yes
+" endif
 
 "使用tab来出发代码补全，前面有字符的情况
 inoremap <silent><expr> <TAB>
@@ -184,7 +222,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gI <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -280,18 +318,28 @@ imap <C-e> <Plug>(coc-snippets-expand-jump)
 """""""""""""""""""""""
 "indentLine
 """""""""""""""""""""""
-let g:indentLine_char_list=['|']
+" let g:indentLine_char_list=['|']
 let g:indentLine_color_gui = '#7B7D7D'
+let g:indent_guides_guide_size = 1
+let g:indent_guides_start_level = 2
 
-"""""""""""""""""""""""
+
+""""""""""""""""""""""
 "vim-gitgutter
 """""""""""""""""""""""
 let g:gitgutter_sign_allow_clobber = 0
+let g:gitgutter_set_sign_backgrounds = 1
 let g:gitgutter_map_keys = 0
-let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_preview_win_floating = 1
-let g:gitgutter_sign_added = '▎'
+" let g:gitgutter_sign_added = '▎'
+let g:gitgutter_sign_added = ''
 let g:gitgutter_sign_modified = '░'
-let g:gitgutter_sign_removed = '▏'
-let g:gitgutter_sign_removed_first_line = '▔'
+" let g:gitgutter_sign_removed = '▏'
+let g:gitgutter_sign_removed = ''
+" let g:gitgutter_sign_removed_first_line = '▔'
+let g:gitgutter_sign_removed_first_line = ''
 let g:gitgutter_sign_modified_removed = '▒'
+" let g:gitgutter_override_sign_column_highlight = 0  
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
