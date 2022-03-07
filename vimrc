@@ -16,6 +16,9 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
+Plug 'liuchengxu/vista.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 "Plug 'dense-analysis/ale'
 call plug#end()
 
@@ -35,7 +38,7 @@ endif
 
 "设置颜色深浅分别为：soft, medium(default), hard
 "gruvbox 的设置需要在 colorscheme 之前
-let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_sign_column='bg0'
 
 colorscheme gruvbox
@@ -167,7 +170,7 @@ let g:airline_symbols.linenr='¶'
 let g:airline_symbols.branch=''
 let g:airline_symbols.readonly="\ue0a2"
 let g:airline#extensions#tabline#buffer_nr_show=1
-let g:airline#extensions#tabline#formatter='default'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_theme='gruvbox'
 " show the number of change / delete / add
 let g:airline#extensions#hunks#enabled=1
@@ -343,3 +346,28 @@ let g:gitgutter_sign_modified_removed = '▒'
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+
+"""""""""""""""""""""""
+"vista
+"""""""""""""""""""""""
+" function! NearestMethodOrFunction() abort
+"   return get(b:, 'vista_nearest_method_or_function', '')
+" endfunction
+" set statusline+=%{NearestMethodOrFunction()}
+" autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+noremap <LEADER>v :Vista!!<CR>
+noremap <c-t> :silent! Vista finder coc<CR>
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista_default_executive = 'coc'
+let g:vista_fzf_preview = ['right:50%']
+let g:vista#renderer#enable_icon = 1
+let g:vista#renderer#icons = {
+\   "function": "\uf794",
+\   "variable": "\uf71b",
+\  }
+
+
+"""""""""""""""""""""""
+"fzf.vim
+"""""""""""""""""""""""
+" let g:fzf_preview_window = 'right:60%'
