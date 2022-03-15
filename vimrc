@@ -7,10 +7,10 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-surround'
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'brach': 'release'}
 Plug 'easymotion/vim-easymotion'
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
@@ -19,6 +19,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'liuchengxu/vista.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'lambdalisue/glyph-palette.vim'
+Plug 'mhinz/vim-startify'
+" Plug 'itchyny/vim-cursorword'
 "Plug 'dense-analysis/ale'
 call plug#end()
 
@@ -38,7 +41,7 @@ endif
 
 "设置颜色深浅分别为：soft, medium(default), hard
 "gruvbox 的设置需要在 colorscheme 之前
-let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_sign_column='bg0'
 
 colorscheme gruvbox
@@ -47,18 +50,20 @@ colorscheme gruvbox
 " autocmd ColorScheme * highlight! link SignColumn LineNr
 " 关于signcolum 颜色不对问题，通过设置gruvbox就可以解决
 
-
+" set relativenumber
 set guioptions=
 set number
 set wrap
-set smartindent
-set autoindent
+" set smartindent
+" set autoindent
 set cindent
+set smartindent
 "显示当前按下的操作符
 set showcmd
 set encoding=utf-8
 "光标所在行高亮
 set cursorline
+set cursorlineopt=line
 "显示状态栏，0不显示，1多窗口显示，2都显示
 set laststatus=2
 "在状态栏显示光标位置
@@ -68,7 +73,7 @@ set nobackup
 "不创建交换文件
 set noswapfile
 "设置TAB宽度，ts为tabstop缩写
-set ts=4
+set tabstop=4
 "在编辑中，存在tab使用的地方一次性删除一个tab
 set softtabstop=4
 "设置每一级缩进长度
@@ -86,13 +91,15 @@ set completeopt=longest,noinsert,menuone,noselect,preview
 set viewoptions=cursor,folds,slash,unix
 " set noshowmode
 "set guifont=DejaVu_Sans_Mono_for_Powerline:h16
-"set guifont=Hack_Nerd_Font_Mono:h16
-set guifont=Hack_Nerd_Font:h18
+" set guifont=Hack_Nerd_Font_Mono:h16
+"set guifont=Hack_Nerd_Font:h18
+set guifont=JetBrainsMono_Nerd_Font_Mono:h16
+
 set splitright
 set splitbelow
 set virtualedit=block
 "使用双字宽显示，不然像 nerd font 的一些字体会显示不完全
-set ambiwidth=double
+" set ambiwidth=double
 set signcolumn=yes
 "创建leader
 "在normal模式下：-,H,L,<space>,<cr>,<bs>是没有映射任何操作的
@@ -101,10 +108,7 @@ let mapleader=" "
 "开启文件类型检查
 filetype indent on
 
-"设置信号列的背景颜色
-" highlight SignColumn guibg=#282828
-" highlight SignColumn ctermbg=235
-" highlight SignColumn term=standout
+nnoremap <leader>n :CocCommand explorer<cr>
 
 nnoremap ; :
 "重新加载配置文件
@@ -126,18 +130,22 @@ nnoremap 'd 'D
 
 "关闭当前查找的高亮
 nnoremap <c-n> :nohl<cr>
-"设置括号自动补全的映射
-"使用插件auto-pairs实现
-" inoremap ( ()<ESC>i
-" inoremap { {}<ESC>i
-" inoremap [ []<ESC>i
-" inoremap ' ''<ESC>i
-" inoremap " ""<ESC>i
 
-inoremap jj <esc>
+" run code
+" '%' denote the current file full path.
+function MyRunFunc()
+    if &filetype == 'python'
+        execute "!python %"
+    endif
+endfunction
+
+nnoremap <F5> :call MyRunFunc()<cr>
+
+
 "设置在插入模式中将当前单词全部大写
 "该设置只适合苹果 D 表示 command 按键
 inoremap <d-u> <esc>viw<s-u>ea
+inoremap <s-cr> <esc>o
 
 "与系统剪切版同步，vim到复制是放入不同到寄存器中
 "但直接用y复制不会放入系统剪切板对应到寄存器中
@@ -161,14 +169,17 @@ let g:airline#extensions#tabline#enabled=1
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#left_seq='▶'
 let g:airline#extensions#tabline#left_alt_seq='❯'
 let g:airline#extensions#tabline#right_seq='◀'
 let g:ariline#extensions#tabline#right_alt_seq='❮'
 let g:airline_symbols.linenr='¶'
-" need other plug(vim-fugitive) to show branch symbol.
+" " need other plug(vim-fugitive) to show branch symbol.
 let g:airline_symbols.branch=''
 let g:airline_symbols.readonly="\ue0a2"
+
 let g:airline#extensions#tabline#buffer_nr_show=1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_theme='gruvbox'
@@ -177,17 +188,29 @@ let g:airline#extensions#hunks#enabled=1
 " show the branch symbol
 let g:airline#extensions#branch#enabled=1
 
+
 """""""""""""""""""""""
 "vim-markdown
 """""""""""""""""""""""
 "取消markdown的折叠
 let g:vim_markdown_folding_disabled=1
 
+" syntax conceal
+set conceallevel=2
+" latex math
+let g:vim_markdown_math = 1
+" yaml front matter
+let g:vim_markdown_frontmatter = 1
+" strikethrough
+let g:vim_markdown_strikethrough = 1
+highlight htmlBold gui=bold guifg=orange
+
+
 """""""""""""""""""""""
 "nerdtree
 """""""""""""""""""""""
 "开启或关闭nerdtree目录导航插件
-nnoremap <leader>n :NERDTreeToggle<cr>
+" nnoremap <leader>n :NERDTreeToggle<cr>
 
 
 
@@ -322,9 +345,9 @@ imap <C-e> <Plug>(coc-snippets-expand-jump)
 "indentLine
 """""""""""""""""""""""
 " let g:indentLine_char_list=['|']
-let g:indentLine_color_gui = '#7B7D7D'
-let g:indent_guides_guide_size = 1
-let g:indent_guides_start_level = 2
+" let g:indentLine_color_gui = '#7B7D7D'
+" let g:indent_guides_guide_size = 1
+" let g:indent_guides_start_level = 2
 
 
 """"""""""""""""""""""
@@ -334,15 +357,11 @@ let g:gitgutter_sign_allow_clobber = 0
 let g:gitgutter_set_sign_backgrounds = 1
 let g:gitgutter_map_keys = 0
 let g:gitgutter_preview_win_floating = 1
-" let g:gitgutter_sign_added = '▎'
-let g:gitgutter_sign_added = ''
+let g:gitgutter_sign_added = '▎'
 let g:gitgutter_sign_modified = '░'
-" let g:gitgutter_sign_removed = '▏'
-let g:gitgutter_sign_removed = ''
-" let g:gitgutter_sign_removed_first_line = '▔'
-let g:gitgutter_sign_removed_first_line = ''
+let g:gitgutter_sign_removed = '▏'
+let g:gitgutter_sign_removed_first_line = '▔'
 let g:gitgutter_sign_modified_removed = '▒'
-" let g:gitgutter_override_sign_column_highlight = 0  
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
@@ -371,3 +390,20 @@ let g:vista#renderer#icons = {
 "fzf.vim
 """""""""""""""""""""""
 " let g:fzf_preview_window = 'right:60%'
+
+"""""""""""""""""""""""
+"coc-explorer
+"""""""""""""""""""""""
+" nmap <leader>e :CocCommand explorer<CR>
+" nmap <leader>f :CocCommand explorer --preset floating<CR>
+" autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+
+
+"""""""""""""""""""""""
+"glyph-palette
+"""""""""""""""""""""""
+" let g:glyph_palette#palette='GlyphPalette1'
+augroup my-glyph-palette
+  autocmd! *
+  autocmd FileType fern,nerdtree,startify,coc-explorer call glyph_palette#apply()
+augroup END
