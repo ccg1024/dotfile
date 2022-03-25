@@ -6,6 +6,7 @@ Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'tpope/vim-surround'
 " Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'brach': 'release'}
@@ -21,6 +22,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'lambdalisue/glyph-palette.vim'
 Plug 'mhinz/vim-startify'
+Plug 'lervag/vimtex'
+" Plug 'SirVer/ultisnips'
 " Plug 'itchyny/vim-cursorword'
 "Plug 'dense-analysis/ale'
 call plug#end()
@@ -54,10 +57,9 @@ colorscheme gruvbox
 set guioptions=
 set number
 set wrap
-" set smartindent
-" set autoindent
-set cindent
 set smartindent
+set autoindent
+" set cindent
 "显示当前按下的操作符
 set showcmd
 set encoding=utf-8
@@ -133,9 +135,15 @@ nnoremap <c-n> :nohl<cr>
 
 " run code
 " '%' denote the current file full path.
+" if want show how much time cost after run code
+" add 'time' command, use python script as example
+" execute '!time python %'
 function MyRunFunc()
     if &filetype == 'python'
         execute "!python %"
+    elseif &filetype == 'java'
+        execute "!javac %"
+        execute "!java %<"
     endif
 endfunction
 
@@ -171,14 +179,20 @@ if !exists('g:airline_symbols')
 endif
 " let g:airline#extensions#tabline#left_sep = ' '
 " let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#left_seq='▶'
-let g:airline#extensions#tabline#left_alt_seq='❯'
-let g:airline#extensions#tabline#right_seq='◀'
-let g:ariline#extensions#tabline#right_alt_seq='❮'
+" let g:airline#extensions#tabline#left_seq='▶'
+" let g:airline#extensions#tabline#left_alt_seq='❯'
+" let g:airline#extensions#tabline#right_seq='◀'
+" let g:ariline#extensions#tabline#right_alt_seq='❮'
 let g:airline_symbols.linenr='¶'
 " " need other plug(vim-fugitive) to show branch symbol.
 let g:airline_symbols.branch=''
 let g:airline_symbols.readonly="\ue0a2"
+
+" change the status line symbol
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_right_sep = ''
 
 let g:airline#extensions#tabline#buffer_nr_show=1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
@@ -196,7 +210,7 @@ let g:airline#extensions#branch#enabled=1
 let g:vim_markdown_folding_disabled=1
 
 " syntax conceal
-set conceallevel=2
+set conceallevel=0
 " latex math
 let g:vim_markdown_math = 1
 " yaml front matter
@@ -407,3 +421,32 @@ augroup my-glyph-palette
   autocmd! *
   autocmd FileType fern,nerdtree,startify,coc-explorer call glyph_palette#apply()
 augroup END
+
+"""""""""""""""""""""""
+"auto-pairs
+"""""""""""""""""""""""
+let g:AutoPairsMapCR = 0
+
+
+
+"""""""""""""""""""""""
+"vimtex
+"for latex
+"""""""""""""""""""""""
+filetype plugin indent on
+
+" let g:vimtex_view_method = 'zathura'
+
+" let g:vimtex_view_general_viewer = 'okular'
+" let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+
+" let g:vimtex_compiler_method = 'latexrun'
+
+let g:tex_flavor = 'xelatex'
+
+" close auto open error window, use :copen to open error window
+let g:vimtex_quickfix_mode = 0
+
+let g:vimtex_view_method='skim'
+let g:vimtex_view_skim_sync = 1
+let g:vimtex_view_skim_activate = 1

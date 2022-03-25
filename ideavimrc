@@ -1,7 +1,13 @@
 " idea的vim插件配置
+set hlsearch
+set mouse=a
+set clipboard=unnamed
 
 " 设置leader
-let mapleader = ","
+let mapleader = " "
+
+map <c-j> <down>
+map <c-k> <up>
 
 " marks 映射修改
 nnoremap ma mA
@@ -10,21 +16,22 @@ nnoremap ms mS
 nnoremap 's 'S
 nnoremap md mD
 nnoremap 'd 'D
-
+nnoremap ; :
 nnoremap <leader>d dd
 
 " 设置buffer或tab的标签切换
 nnoremap [b :bp<cr>
 nnoremap ]b :bn<cr>
 
-set hlsearch
 nnoremap <c-n> :nohl<cr>
 
-set mouse=a
 
 " 将当前单词全部大写
-inoremap <d-u> <esc>viw<s-u>
-inoremap <m-u> <esc>viw<s-u>
+" inoremap <d-u> <esc>viw<s-u>ea
+inoremap <m-u> <esc>viw<s-u>ea
+inoremap <c-f> <Right>
+inoremap <c-b> <Left>
+inoremap jj <esc>
 
 """ Plugins ------
 set surround
@@ -55,7 +62,9 @@ map <leader>f <Plug>(easymotion-s)
 map <leader>e <Plug>(easymotion-f)
 
 map <leader>d <Action>(Debug)
+map <leader>R <Action>(Run)
 map <leader>r <Action>(RenameElement)
+
 map <leader>c <Action>(Stop)
 map <leader>z <Action>(ToggleDistractionFreeMode)
 
