@@ -27,6 +27,7 @@ Plug 'kshenoy/vim-signature'
 " Plug 'SirVer/ultisnips'
 " Plug 'itchyny/vim-cursorword'
 "Plug 'dense-analysis/ale'
+Plug 'francoiscabrol/ranger.vim'
 call plug#end()
 
 
@@ -145,7 +146,7 @@ nnoremap <c-n> :nohl<cr>
 " if want show how much time cost after run code
 " add 'time' command, use python script as example
 " execute '!time python %'
-function MyRunFunc()
+function! MyRunFunc()
     if &filetype == 'python'
         execute "!python %"
     elseif &filetype == 'java'
