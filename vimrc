@@ -23,6 +23,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'lambdalisue/glyph-palette.vim'
 Plug 'mhinz/vim-startify'
 Plug 'lervag/vimtex'
+Plug 'kshenoy/vim-signature'
 " Plug 'SirVer/ultisnips'
 " Plug 'itchyny/vim-cursorword'
 "Plug 'dense-analysis/ale'
@@ -54,7 +55,9 @@ colorscheme gruvbox
 " 关于signcolum 颜色不对问题，通过设置gruvbox就可以解决
 
 " set relativenumber
+set t_Co=256 
 set guioptions=
+set nocompatible
 set number
 set wrap
 set smartindent
@@ -65,7 +68,7 @@ set showcmd
 set encoding=utf-8
 "光标所在行高亮
 set cursorline
-set cursorlineopt=line
+" set cursorlineopt=line
 "显示状态栏，0不显示，1多窗口显示，2都显示
 set laststatus=2
 "在状态栏显示光标位置
@@ -107,12 +110,16 @@ set signcolumn=yes
 "在normal模式下：-,H,L,<space>,<cr>,<bs>是没有映射任何操作的
 let mapleader=" "
 
+"set cursor shape in iterm2
+let &t_SI = "\<Esc>]1337;CursorShape=1\x7"
+let &t_EI = "\<Esc>]1337;CursorShape=0\x7"
+
 "开启文件类型检查
 filetype indent on
 
 nnoremap <leader>n :CocCommand explorer<cr>
 
-nnoremap ; :
+" nnoremap ; :
 "重新加载配置文件
 nnoremap <leader>sv :source $MYVIMRC<cr>
 "设置buffer的切换
@@ -147,8 +154,19 @@ function MyRunFunc()
     endif
 endfunction
 
-nnoremap <F5> :call MyRunFunc()<cr>
+function! MRun()
+    if &filetype == 'python'
+        execute "!python % > output.txt"
+    elseif &filetype == 'java'
+        execute "!javac %"
+        execute "!java %<"
+    endif
 
+    execute "vsplit output.txt"
+endfunction
+
+nnoremap <F5> :call MyRunFunc()<cr>
+command! MRun call MRun()
 
 "设置在插入模式中将当前单词全部大写
 "该设置只适合苹果 D 表示 command 按键
@@ -167,6 +185,10 @@ inoremap <s-cr> <esc>o
 "根据官网文档，y,d,x,c,s 的操作会将内容放入 unameed 寄存器。所以开启以下s设置
 "就同步系统剪切板
 set clipboard=unnamed
+set gcr=a:blinkon0
+
+highlight clear CursorLineNr
+highlight CursorLineNr term=bold ctermfg=214 guifg=#fabd2f 
 
 
 """""""""""""""""""""""
@@ -278,6 +300,7 @@ endfunction
 
 "同名变量高亮
 autocmd CursorHold * silent call CocActionAsync('highlight')
+" highlight CocHighlightText guibg=#fe8019 ctermbg=208
 
 "rename elements
 nmap <leader>rn <Plug>(coc-rename)
@@ -404,6 +427,7 @@ let g:vista#renderer#icons = {
 "fzf.vim
 """""""""""""""""""""""
 " let g:fzf_preview_window = 'right:60%'
+" using :Files to open fzf windows
 
 """""""""""""""""""""""
 "coc-explorer
@@ -450,3 +474,12 @@ let g:vimtex_quickfix_mode = 0
 let g:vimtex_view_method='skim'
 let g:vimtex_view_skim_sync = 1
 let g:vimtex_view_skim_activate = 1
+" use this commentray to set the compile version
+" % !TEX program = xelatex
+" put the commentray above on the top of tex file
+
+
+"""""""""""""""""""""""
+"vim-signature
+"show marks in signcolumn
+""""""""""""""""""""""""
