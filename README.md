@@ -2,10 +2,10 @@
 # vim
 自用的 vim 相关配置, 官方帮助文档：[Vim: help.txt](https://vimhelp.org/)
 
-#### vim-gitgutter
+# vim-gitgutter
 插件需要文件被git追踪后才有效果
 
-#### coc-java
+# coc-java
 无端出现 `highlight` 报错时，需要在插件安装目录中修改文件 `coc.nvim/autoload/coc/highlight.vim`。大概在 628 行左右。[issues](https://github.com/neoclide/coc.nvim/commit/03a532b544930d6957493933089135d5fa3e7be6)。
 ```vim
 # 原本内容
@@ -22,7 +22,7 @@ function! s:prop_type_hlgroup(type) abort
 endfunction
 ```
 
-#### coc-pyright
+# coc-pyright
 当前 vim 编辑器的位置需要在工程根目录，使用了虚拟环境最好在工程根目录下配置虚拟环境路径，配置文件名为 `pyrightconfig.json`
 ```json
 {
@@ -31,7 +31,7 @@ endfunction
 }
 ```
 
-#### 常用命令
+# 常用命令
 - `:edit filename` 来打开或创建一个文件；
 - `:bdelete filename/number` 关闭缓冲区中对应的文件，但所有文件的排序数值不变；
 - Visual 模式中，通过 `<` or `>` 进行缩进缩出；
@@ -49,3 +49,6 @@ endfunction
 - vim 中有三种文字对象，段落，句子，单词，段落是以空行进行区分，使用 `{` 与 `}` 进行段落的上下移动。句子鉴定同中文标点，但后面加一个空格回车等符号，使用 `(` 与 `)` 进行句子上下移动。单词规则同英文。但是大写的 `W` 只是将空格，回车，tab键分割的对象看成一个词；
 - `*` 或 `#` 能够快速进行全字匹配，是一个快速搜索按键，若在前面加上 `g` 则是普通的字符匹配，只要包含该词的部分，都会显示；
 - 通过命令行的方式进行全字匹配（普通搜索都不是全字，只要部分有都会显示）：`/\<word\>` ，该命令从光标向下查找单词 word ，字符 `?` 是向上搜索，操作同向下搜索；
+
+# ranger.vim
+只是一个调用插件，需要自行安装Ranger。
