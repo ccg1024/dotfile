@@ -6,13 +6,13 @@ Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug 'dracula/vim', {'as': 'dracula'}
 Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'brach': 'release'}
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
-Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 Plug 'liuchengxu/vista.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -23,6 +23,7 @@ Plug 'lervag/vimtex'
 Plug 'kshenoy/vim-signature'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 call plug#end()
 
 
@@ -38,11 +39,14 @@ if (empty($TMUX))
   endif
 endif
 
-let g:gruvbox_contrast_dark='medium'
-let g:gruvbox_sign_column='bg0'
+" let g:gruvbox_contrast_dark='medium'
+" let g:gruvbox_sign_column='bg0'
+" colorscheme gruvbox
+colorscheme dracula
 
-colorscheme gruvbox
-set t_Co=256 
+" hi Normal guibg=NONE ctermbg=NONE
+
+" set t_Co=256 
 set guioptions=
 set nocompatible
 set number
@@ -96,6 +100,14 @@ nnoremap 's 'S
 nnoremap 'd 'D
 
 nnoremap <c-n> :nohl<cr>
+nnoremap <c-j> 5j
+nnoremap <c-k> 5k
+nnoremap <c-h> 5h
+nnoremap <c-l> 5l
+vnoremap <c-j> 5j
+vnoremap <c-k> 5k
+vnoremap <c-h> 5h
+vnoremap <c-l> 5l
 
 " run code
 " '%' denote the current file full path.
@@ -104,10 +116,14 @@ nnoremap <c-n> :nohl<cr>
 " execute '!time python %'
 function MyRunFunc()
     if &filetype == 'python'
-        execute "!python %"
+        set splitbelow
+        :sp
+        :term python3 %
     elseif &filetype == 'java'
-        execute "!javac %"
-        execute "!java %<"
+        set splitbelow
+        :sp
+        :res -5
+        :term javac % && time java %<
     endif
 endfunction
 
@@ -123,7 +139,7 @@ function! MRun()
 endfunction
 
 nnoremap <F5> :call MyRunFunc()<cr>
-command! MRun call MRun()
+command! Mr call MyRunFunc()
 
 inoremap <d-u> <esc>viw<s-u>ea
 inoremap <s-cr> <esc>o
@@ -138,25 +154,26 @@ highlight CursorLineNr term=bold ctermfg=214 guifg=#fabd2f
 """""""""""""""""""""""
 "vim-airline
 """""""""""""""""""""""
-let g:airline_powerline_fonts=1 
+let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline_symbols.linenr='¶'
+" let g:airline_symbols.linenr=''
 " " need other plug(vim-fugitive) to show branch symbol.
-let g:airline_symbols.branch=''
+let g:airline_symbols.branch=''
 let g:airline_symbols.readonly="\ue0a2"
 
 " change the status line symbol
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_right_sep = ''
+"          
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = '▏'
+" let g:airline_right_alt_sep = '▏'
+" let g:airline_right_sep = ''
 
 let g:airline#extensions#tabline#buffer_nr_show=1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_theme='gruvbox'
+let g:airline_theme='dracula'
 " show the number of change / delete / add
 let g:airline#extensions#hunks#enabled=1
 " show the branch symbol
@@ -212,6 +229,7 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" open complication bar again
 inoremap <silent><expr> <c-o> coc#refresh()
 
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
@@ -302,12 +320,14 @@ let g:coc_global_extensions = [
     \ 'coc-snippets',
     \ 'coc-pyright',
     \ 'coc-json',
-    \ 'coc-java']
+    \ 'coc-java',
+    \ 'coc-explorer',
+    \ 'coc-pairs']
 
 imap <C-l> <Plug>(coc-snippets-expand)
 vmap <C-e> <Plug>(coc-snippets-select)
 let g:coc_snippet_next = '<c-e>'
-let g:coc_snippet_prev = '<c-l>'
+" let g:coc_snippet_prev = '<c-l>'
 imap <C-e> <Plug>(coc-snippets-expand-jump)
 
 
@@ -370,11 +390,6 @@ augroup my-glyph-palette
   autocmd FileType fern,nerdtree,startify,coc-explorer call glyph_palette#apply()
 augroup END
 
-"""""""""""""""""""""""
-"auto-pairs
-"""""""""""""""""""""""
-let g:AutoPairsMapCR = 0
-
 
 
 """""""""""""""""""""""
@@ -416,3 +431,7 @@ let g:vimtex_view_skim_activate = 1
 autocmd User EasyMotionPromptBegin silent! CocDisable
 autocmd User EasyMotionPromptEnd silent! CocEnable
 
+"""""""""""""""""""""""
+"vim-markdown-preview
+"""""""""""""""""""""""
+" let g:mkdp_browser = 'chrome'
