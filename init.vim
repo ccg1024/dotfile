@@ -1,9 +1,10 @@
 ">^.^<
 "插件
 call plug#begin('~/.vim/plugged')
-Plug 'vim-airline/vim-airline'
+Plug 'projekt0n/github-nvim-theme'
+" Plug 'vim-airline/vim-airline'
 Plug 'morhetz/gruvbox'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline-themes'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'dracula/vim', {'as': 'dracula'}
@@ -24,6 +25,7 @@ Plug 'kshenoy/vim-signature'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+" Plug 'liuchengxu/eleline.vim'
 call plug#end()
 
 
@@ -42,12 +44,11 @@ endif
 " let g:gruvbox_contrast_dark='medium'
 " let g:gruvbox_sign_column='bg0'
 " colorscheme gruvbox
-colorscheme dracula
+colorscheme github_dark_default
 
 " hi Normal guibg=NONE ctermbg=NONE
 
-" set t_Co=256 
-set guioptions=
+" set t_Co=256
 set nocompatible
 set number
 set wrap
@@ -56,7 +57,11 @@ set autoindent
 set showcmd
 set encoding=utf-8
 set cursorline
-set laststatus=2
+" set showtabline=2
+set laststatus=3
+" set winbar=%f
+" new feature, first test on internet in 2022/5/20.
+" so, can not use at present.
 set ruler
 set nobackup
 set noswapfile
@@ -148,7 +153,12 @@ set clipboard=unnamed
 set gcr=a:blinkon0
 
 highlight clear CursorLineNr
-highlight CursorLineNr term=bold ctermfg=214 guifg=#fabd2f 
+highlight CursorLineNr term=bold ctermfg=214 guifg=#fabd2f
+
+"""""""""""""""""""""""
+"own statusline and tabline
+"need make asynchronous function
+"""""""""""""""""""""""
 
 
 """""""""""""""""""""""
@@ -165,19 +175,19 @@ let g:airline_symbols.branch=''
 let g:airline_symbols.readonly="\ue0a2"
 
 " change the status line symbol
-"          
-" let g:airline_left_sep = ''
+"            
+" let g:airline_left_sep = '▏'
 " let g:airline_left_alt_sep = '▏'
 " let g:airline_right_alt_sep = '▏'
-" let g:airline_right_sep = ''
+" let g:airline_right_sep = '▏'
 
 let g:airline#extensions#tabline#buffer_nr_show=1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_theme='dracula'
+" let g:airline_theme='dracula'
 " show the number of change / delete / add
-let g:airline#extensions#hunks#enabled=1
+" let g:airline#extensions#hunks#enabled=1
 " show the branch symbol
-let g:airline#extensions#branch#enabled=1
+" let g:airline#extensions#branch#enabled=1
 
 
 """""""""""""""""""""""
@@ -298,7 +308,8 @@ xmap <silent> <C-s> <Plug>(coc-range-select)
 command! -nargs=0 Format :call CocActionAsync('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set for statusline ?
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
 nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
