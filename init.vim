@@ -132,17 +132,6 @@ function MyRunFunc()
     endif
 endfunction
 
-function! MRun()
-    if &filetype == 'python'
-        execute "!python % > output.txt"
-    elseif &filetype == 'java'
-        execute "!javac %"
-        execute "!java %<"
-    endif
-
-    execute "vsplit output.txt"
-endfunction
-
 nnoremap <F5> :call MyRunFunc()<cr>
 command! Mr call MyRunFunc()
 
@@ -158,7 +147,18 @@ highlight CursorLineNr term=bold ctermfg=214 guifg=#fabd2f
 """""""""""""""""""""""
 "own statusline and tabline
 "need make asynchronous function
+"
 """""""""""""""""""""""
+set statusline=
+set statusline+=\ %f
+set statusline+=\ %{FugitiveStatusline()}
+set statusline+=\%= " separator
+set statusline+=\ FT:\ %Y
+set statusline+=\ BN:\ %n
+set statusline+=\ LN:\ %l
+set statusline+=\ CN:\ %v
+
+
 
 
 """""""""""""""""""""""
