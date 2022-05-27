@@ -1,4 +1,4 @@
-![screenshot](screenshot.png)
+![screenshot](github_neovim_theme.png)
 # vim
 自用的 vim 相关配置, 官方帮助文档：[Vim: help.txt](https://vimhelp.org/)
 
