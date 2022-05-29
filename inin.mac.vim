@@ -55,7 +55,14 @@ endif
 " =
 " = github_dark_default, github_light
 " ==============================================================================
+let g:github_function_style = "italic"
+let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer", "coc-explorer", "Vista"]
 
+" Change the "hint" color to the "orange" color, and make the "error" color bright red
+let g:github_colors = {
+  \ 'hint': 'orange',
+  \ 'error': '#ff0000'
+\ }
 colorscheme github_light
 
 " hi Normal guibg=NONE ctermbg=NONE
@@ -84,7 +91,7 @@ set hlsearch
 set mouse=a
 set completeopt=longest,noinsert,menuone,noselect,preview
 set viewoptions=cursor,folds,slash,unix
-
+set path+=**  " for :find command, this make if search at current path and subpath.
 set splitright
 set splitbelow
 set virtualedit=block
@@ -185,9 +192,18 @@ function! StatusDiagnostic() abort
   return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
 endfunction
 
+function! MyGitStatus() abort
+    let myHead = FugitiveStatusline()
+    if empty(myHead)
+        return ''
+    endif
+    return " " . myHead
+endfunction
+
 set statusline=
 set statusline+=\ %f
-set statusline+=\ %{FugitiveStatusline()[1:-2]}
+set statusline+=\ %m
+set statusline+=\ %{MyGitStatus()}
 set statusline+=\ %{StatusDiagnostic()}
 set statusline+=\ %{get(b:,'coc_current_function','')}
 set statusline+=\%= " separator
