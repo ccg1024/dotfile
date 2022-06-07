@@ -1,12 +1,22 @@
 ![screenshot](github_neovim_theme.png)
+
+- `vimrc`: 没更新
+- `init.vim`: 同步arch上nvim配置
+- `init.mac.vim`: 同步mac上nvim配置
+
+
 # vim
+
 自用的 vim 相关配置, 官方帮助文档：[Vim: help.txt](https://vimhelp.org/)
 
 # vim-gitgutter
+
 插件需要文件被git追踪后才有效果
 
 # coc-java
+
 无端出现 `highlight` 报错时，需要在插件安装目录中修改文件 `coc.nvim/autoload/coc/highlight.vim`。大概在 628 行左右。[issues](https://github.com/neoclide/coc.nvim/commit/03a532b544930d6957493933089135d5fa3e7be6)。
+
 ```vim
 # 原本内容
 function! s:prop_type_hlgroup(type) abort
@@ -22,8 +32,13 @@ function! s:prop_type_hlgroup(type) abort
 endfunction
 ```
 
+> 更新后修复
+
+
 # coc-pyright
+
 当前 vim 编辑器的位置需要在工程根目录，使用了虚拟环境最好在工程根目录下配置虚拟环境路径，配置文件名为 `pyrightconfig.json`
+
 ```json
 {
   "venvPath": "存放虚拟环境文件夹路径，默认在当前工作路径寻找",
@@ -32,6 +47,7 @@ endfunction
 ```
 
 # 常用命令
+
 - `:edit filename` 来打开或创建一个文件；
 - `:bdelete filename/number` 关闭缓冲区中对应的文件，但所有文件的排序数值不变；
 - Visual 模式中，通过 `<` or `>` 进行缩进缩出；
@@ -51,4 +67,5 @@ endfunction
 - 通过命令行的方式进行全字匹配（普通搜索都不是全字，只要部分有都会显示）：`/\<word\>` ，该命令从光标向下查找单词 word ，字符 `?` 是向上搜索，操作同向下搜索；
 
 # ranger.vim
+
 只是一个调用插件，需要自行安装Ranger。
