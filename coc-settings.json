@@ -1,5 +1,18 @@
 {
-    "python.pythonPath": "~/PycharmProjects/scienceCompute/work/bin/python3",
+    "suggest.floatConfig": {
+        "border": true
+    },
+    "diagnostic.floatConfig": {
+        "border": true
+    },
+    "hover.floatConfig": {
+        "border": true
+    },
+    "signature.floatConfig": {
+        "border": true
+    },
+    "python.pythonPath": "~/miniforge3/envs/pytorchVenv/bin/python",
+    "python.venvPath": "${env:HOME}/miniforge3/envs/",
     "coc.preferences.extensionUpdateCheck": "daily",
     "suggest.noselect": true,
     "suggest.enablePreselect": false,
@@ -8,6 +21,7 @@
     "diagnostic.checkCurrentLine": true,
     "diagnostic.virtualText": true,
     "codeLens.enable": true,
+    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
     "coc.preferences.formatOnSaveFiletypes": [
         "json"
     ],
@@ -58,9 +72,10 @@
     "explorer.width": 30,
     "explorer.file.column.indent.indentLine": true,
     "explorer.icon.enableNerdfont": true,
-    "explorer.icon.source": "vim-devicons",
+    "explorer.icon.source": "nvim-web-devicons",
     "explorer.file.git.showUntrackedFiles": true,
     "explorer.file.cdCommand": "cd",
+    "explorer.openAction.relativePath": true,
     "colors.filetypes": [
         "*"
     ],
