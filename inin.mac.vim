@@ -3,9 +3,7 @@
 call plug#begin('~/.vim/plugged')
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'projekt0n/github-nvim-theme'
-" Plug 'vim-airline/vim-airline'
 Plug 'morhetz/gruvbox'
-" Plug 'vim-airline/vim-airline-themes'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'dracula/vim', {'as': 'dracula'}
@@ -13,21 +11,25 @@ Plug 'tpope/vim-surround'
 Plug 'neoclide/coc.nvim', {'brach': 'release'}
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
-" Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'liuchengxu/vista.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-" Plug 'lambdalisue/glyph-palette.vim'
 Plug 'mhinz/vim-startify'
 Plug 'lervag/vimtex'
 Plug 'kshenoy/vim-signature'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-" Plug 'liuchengxu/eleline.vim'
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'ryanoasis/vim-devicons'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
+" Plug 'lambdalisue/glyph-palette.vim'
+" Plug 'liuchengxu/eleline.vim'
 call plug#end()
 
 
@@ -63,12 +65,13 @@ let g:github_colors = {
   \ 'hint': 'orange',
   \ 'error': '#ff0000'
 \ }
-colorscheme github_light
+colorscheme github_dark_default
 
 " hi Normal guibg=NONE ctermbg=NONE
 
 " set t_Co=256
-set number
+" set number
+" set relativenumber
 set wrap
 set smartindent
 set autoindent
@@ -98,6 +101,28 @@ set virtualedit=block
 set signcolumn=yes
 let mapleader=" "
 
+" ==============================================================================
+" = for file brosing by vim
+" = find key maps in: netrw-browse-maps 
+" = this is some key maps which usually will be use.
+" = a    - toggle show some hidden file.
+" = I    - toggle the displaying of the banner.
+" = d    - make a directory.
+" = %    - make a new file in current path.
+" = D    - remove the file/directory.
+" = R    - rename the file/directory.
+" = v    - open file in vertical split.
+" = o    - open file in horizontal split.
+" = <cr> - open file in horizontal split, or just open a directory.
+" ==============================================================================
+
+let g:netrw_banner=0
+let g:netrw_browse_split=4
+let g:netrw_altv=1
+let g:netrw_liststyle=3
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+
 "set cursor shape in iterm2
 au VimEnter,VimResume * set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 au VimLeave,VimSuspend * set guicursor=a:blinkon0
@@ -106,7 +131,7 @@ au VimLeave,VimSuspend * set guicursor=a:blinkon0
 filetype indent on
 
 nnoremap <leader>n :CocCommand explorer<cr>
-nnoremap <leader>F :Files<cr>
+nnoremap <leader>F :Ranger<cr>
 
 nnoremap [b :bp<cr>
 nnoremap ]b :bn<cr>
@@ -276,16 +301,16 @@ set shortmess+=c
 "使用tab来出发代码补全，前面有字符的情况
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ CheckBackspace() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-function! s:check_back_space() abort
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " open complication bar again
-inoremap <silent><expr> <c-o> coc#refresh()
+" inoremap <silent><expr> <c-space> coc#refresh()
 
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -491,6 +516,7 @@ let g:vimtex_view_skim_activate = 1
 
 autocmd User EasyMotionPromptBegin silent! CocDisable
 autocmd User EasyMotionPromptEnd silent! CocEnable
+nmap f <Plug>(easymotion-s)
 
 " ==============================================================================
 " = vim-markdown-preview
@@ -509,3 +535,10 @@ EOF
 " nnoremap <silent>[b :BufferLineCycleNext<CR>
 " nnoremap <silent>b] :BufferLineCyclePrev<CR>
 
+" ==============================================================================
+" = telescope: a fuzzy finder
+" ==============================================================================
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
