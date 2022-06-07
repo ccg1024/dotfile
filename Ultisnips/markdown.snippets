@@ -1,0 +1,25 @@
+snippet mimgc "make a html image" b
+<p align="center">
+  <img src="${1:image_path}" style="width:${2:500px};height:${3:400px}"/>
+</p>
+endsnippet
+
+snippet mimg "make a markdown image" b
+![${1:image_alt}](${2:image_path})
+endsnippet
+
+snippet mlink "make a markdown link" b
+[${1:link_name}](${2:link_address})
+endsnippet
+
+snippet mtab "make a markdown table" b
+| table_head1 | table_head2 |
+| ----        | ----        |
+| content     | content     |
+endsnippet
+
+snippet mlatex "make a latex formula" b
+$$\begin{aligned}
+${0}
+\end{aligned}$$
+endsnippet

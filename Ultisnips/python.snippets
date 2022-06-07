@@ -1,0 +1,27 @@
+snippet st "print"
+print(${0})
+endsnippet
+
+snippet todo "insert TODO"
+# TODO: ${1:CCG}: ${0}
+endsnippet
+
+snippet mpc "param comments" b
+:param ${1:param_name}: 
+endsnippet
+
+snippet mfun "create a normal function" b
+def ${1:function_name}():
+	pass
+endsnippet
+
+snippet mfi "create a file info of python" b
+"""
+@author: ${1:file_author}
+@time: ${2:creative_time}
+
+description:
+-----------
+${0}
+"""
+endsnippet

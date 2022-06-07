@@ -1,0 +1,40 @@
+snippet be "generate begin-end pair" b
+\begin{${1:pack_name}}
+    ${0}
+\end{${1}}
+endsnippet
+
+snippet mfig "create a figure frame" b
+\begin{figure*}[h]
+	\centering
+	\includegraphics[width=3in]{${1:image_path}}
+\end{figure*}
+endsnippet
+
+snippet mtab "create a table frame" b
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{5in}{*{${1:column_num}}{>{\arraybackslash}X}}
+	\toprule
+
+	\end{tabularx}
+\end{table}
+endsnippet
+
+snippet mbox "create a box with border" b
+\vspace{2ex}
+\begin{center}
+	\framebox[\linewidth]{
+		\begin{minipage}{5in}
+			\smallskip
+		\end{minipage}
+	}
+\end{center}
+endsnippet
+
+snippet mtheo "create a new theorem" b
+\newtheorem{${1:theorem_name}}{Theorem_title}[section]
+\begin{${1}}
+
+\end{${1}}
+endsnippet
