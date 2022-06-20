@@ -23,6 +23,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 " Plug 'ryanoasis/vim-devicons'
@@ -39,15 +40,8 @@ call plug#end()
 
 syntax enable
 set background=dark
-
-if (empty($TMUX))
-  if (has("nvim"))
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  if (has("termguicolors"))
-    set termguicolors
-  endif
-endif
+set termguicolors
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " ==============================================================================
 " = for theme
@@ -65,12 +59,15 @@ let g:github_colors = {
   \ 'hint': 'orange',
   \ 'error': '#ff0000'
 \ }
-colorscheme github_dark_default
+let g:gruvbox_contrast_dark="soft"
+let g:gruvbox_sign_column='bg0'
+colorscheme gruvbox
 
 " hi Normal guibg=NONE ctermbg=NONE
 
 " set t_Co=256
-" set number
+set number
+set colorcolumn=80
 " set relativenumber
 set wrap
 set smartindent
@@ -99,6 +96,7 @@ set splitright
 set splitbelow
 set virtualedit=block
 set signcolumn=yes
+set foldmethod=manual
 let mapleader=" "
 
 " ==============================================================================
@@ -415,6 +413,7 @@ imap <C-e> <Plug>(coc-snippets-expand-jump)
 
 " ==============================================================================
 " = vim-gitgutter
+" = ▏
 " ==============================================================================
 
 let g:gitgutter_sign_allow_clobber = 0
@@ -423,12 +422,12 @@ let g:gitgutter_map_keys = 0
 let g:gitgutter_preview_win_floating = 1
 let g:gitgutter_sign_added = '▎'
 let g:gitgutter_sign_modified = '░'
-let g:gitgutter_sign_removed = '▏'
+let g:gitgutter_sign_removed = '▎'
 let g:gitgutter_sign_removed_first_line = '▔'
 let g:gitgutter_sign_modified_removed = '▒'
-highlight GitGutterAdd    guifg=#009900 ctermfg=2
-highlight GitGutterChange guifg=#bbbb00 ctermfg=3
-highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+highlight GitGutterAdd    guifg=#3EC70B ctermfg=2
+highlight GitGutterChange guifg=#F7EC09 ctermfg=3
+highlight GitGutterDelete guifg=#FF5B00 ctermfg=1
 
 
 " ==============================================================================
@@ -530,8 +529,28 @@ nmap f <Plug>(easymotion-s)
 " ==============================================================================
 
 lua << EOF
-require("bufferline").setup{}
+require("bufferline").setup{
+  options = {
+    mode = "buffers",
+    numbers = "ordinal",
+    diagnostic = "coc",
+    color_icons = true,
+    always_show_bufferline = true,
+    offsets = {
+      {
+        filetype = "coc-explorer",
+        text = "Coc Explorer",
+        highlight = "Directory",
+        text_align = "left"
+      }
+    }
+  }
+}
 EOF
+
+highlight BufferLineFill cterm=reverse ctermfg=239 ctermbg=223 
+highlight BufferLineFill gui=reverse guifg=#504945 guibg=#ebdbb2
+
 " nnoremap <silent>[b :BufferLineCycleNext<CR>
 " nnoremap <silent>b] :BufferLineCyclePrev<CR>
 
@@ -542,3 +561,17 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" ==============================================================================
+" = treesitter
+" = A syntax highlight plug.
+" ==============================================================================
+
+lua << EOF
+require('nvim-treesitter.configs').setup{
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  }
+}
+EOF
