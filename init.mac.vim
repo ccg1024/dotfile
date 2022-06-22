@@ -24,6 +24,8 @@ Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'akinsho/toggleterm.nvim', { 'tag' : 'v1.*' }
+Plug 'tpope/vim-obsession'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 " Plug 'ryanoasis/vim-devicons'
@@ -154,6 +156,9 @@ vnoremap <c-k> 5k
 vnoremap <c-h> 5h
 vnoremap <c-l> 5l
 
+" return to normal model on terminal model
+" tnoremap <Esc> <C-\><C-n>
+
 " ==============================================================================
 " = run code
 " = '%' denote the current file full path.
@@ -177,10 +182,6 @@ endfunction
 
 nnoremap <F5> :call MyRunFunc()<cr>
 command! Mr call MyRunFunc()
-
-" does not work in terminal, since the terminal will
-" ignore some enter combinations
-inoremap <s-cr> <esc>o
 
 set clipboard=unnamed
 set gcr=a:blinkon0
@@ -230,6 +231,7 @@ set statusline+=\ %{MyGitStatus()}
 set statusline+=\ %{StatusDiagnostic()}
 set statusline+=\ %{get(b:,'coc_current_function','')}
 set statusline+=\%= " separator
+set statusline+=\ %{ObsessionStatus()}
 set statusline+=\ FT:\ %Y
 set statusline+=\ BN:\ %n
 set statusline+=\ LN:\ %l
@@ -565,6 +567,8 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 " ==============================================================================
 " = treesitter
 " = A syntax highlight plug.
+" = need use TSInstall LANGUAGE_NAME to install highlight.
+" = for python example: TSInstall python
 " ==============================================================================
 
 lua << EOF
@@ -575,3 +579,28 @@ require('nvim-treesitter.configs').setup{
   }
 }
 EOF
+
+" ==============================================================================
+" = toggleterm
+" ==============================================================================
+lua << EOF
+require("toggleterm").setup{
+  size = 20,
+  open_mapping = [[<c-\>]],
+  direction = 'float',
+  close_on_exit = true,
+}
+EOF
+function! Mterm() abort
+    :ToggleTerm direction=horizontal
+endfunction
+command! Mterm call Mterm()
+
+" ==============================================================================
+" = vim-obsession
+" = a plugin to save vim/neovim session.
+" = use :Obsession {dir} to start write a session file in {dir}
+" = like IDE pycharm, recommend {dir} equal to ./.vimsession
+" = using %{ObsessionStatus()} to show info in statusline
+" ==============================================================================
+
