@@ -26,6 +26,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'akinsho/toggleterm.nvim', { 'tag' : 'v1.*' }
 Plug 'tpope/vim-obsession'
+Plug 'Vimjas/vim-python-pep8-indent'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 " Plug 'ryanoasis/vim-devicons'
@@ -40,7 +41,7 @@ call plug#end()
 " = normal option
 " ==============================================================================
 
-syntax enable
+" syntax enable
 set background=dark
 set termguicolors
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -54,22 +55,22 @@ set termguicolors
 " = github_dark_default, github_light
 " ==============================================================================
 let g:github_function_style = "italic"
-let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer", "coc-explorer", "Vista"]
+let g:github_sidebars = ["qf", "terminal", "packer", "coc-explorer", "vista_markdown", "vista"]
 
 " Change the "hint" color to the "orange" color, and make the "error" color bright red
 let g:github_colors = {
-  \ 'hint': 'orange',
-  \ 'error': '#ff0000'
-\ }
+      \ 'hint': 'orange',
+      \ 'error': '#ff0000'
+      \ }
 let g:gruvbox_contrast_dark="soft"
 let g:gruvbox_sign_column='bg0'
-colorscheme gruvbox
+colorscheme github_dark
 
 " hi Normal guibg=NONE ctermbg=NONE
 
 " set t_Co=256
 set number
-set colorcolumn=80
+" set colorcolumn=80
 " set relativenumber
 set wrap
 set smartindent
@@ -100,6 +101,9 @@ set virtualedit=block
 set signcolumn=yes
 set foldmethod=manual
 let mapleader=" "
+
+" make vimscript indent 2
+autocmd FileType vim set shiftwidth=2 tabstop=2 softtabstop=2
 
 " ==============================================================================
 " = for file brosing by vim
@@ -168,16 +172,16 @@ vnoremap <c-l> 5l
 " ==============================================================================
 
 function MyRunFunc()
-    if &filetype == 'python'
-        set splitbelow
-        :sp
-        :term python3 %
-    elseif &filetype == 'java'
-        set splitbelow
-        :sp
-        :res -5 " resize the window, down 5 line.
-        :term javac % && time java %<
-    endif
+  if &filetype == 'python'
+    set splitbelow
+    :sp
+    :term python3 %
+  elseif &filetype == 'java'
+    set splitbelow
+    :sp
+    :res -5 " resize the window, down 5 line.
+    :term javac % && time java %<
+  endif
 endfunction
 
 nnoremap <F5> :call MyRunFunc()<cr>
@@ -198,6 +202,7 @@ highlight CursorLineNr term=bold ctermfg=214 guifg=#fabd2f
 "
 " = for coc info: use b:coc_diagnostic_info
 " = {'error': 0, 'warning': 0, 'information': 0, 'hint':0}`
+" =   ﱤ ﱴ    
 " ==============================================================================
 
 function! StatusDiagnostic() abort
@@ -205,39 +210,60 @@ function! StatusDiagnostic() abort
   if empty(info) | return '' | endif
   let msgs = []
   if get(info, 'error', 0)
-    call add(msgs, '' . info['error'])
+    call add(msgs, 'E' . info['error'])
+  else
+    call add(msgs, 'E' . '0')
   endif
+
   if get(info, 'warning', 0)
-    call add(msgs, 'ﱤ' . info['warning'])
+    call add(msgs, 'W' . info['warning'])
+  else
+    call add(msgs, 'W' . '0')
   endif
+
   if get(info, 'hint', 0)
-    call add(msgs, 'ﱴ' . info['hint'])
+    call add(msgs, 'H' . info['hint'])
+  else
+    call add(msgs, 'H' . '0')
   endif
   return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
 endfunction
 
 function! MyGitStatus() abort
-    let myHead = FugitiveStatusline()
-    if empty(myHead)
-        return ''
+  let myHead = FugitiveStatusline()
+  if empty(myHead)
+    return ''
+  endif
+
+  let [a,m,r] = GitGutterGetHunkSummary()
+
+  return " " . myHead . printf(' +%d ~%d -%d', a, m, r)
+endfunction
+
+function! MyFileEncode() abort
+  if &fileencoding == ""
+    if &encoding != ""
+      return toupper(&encoding)
+    else
+      return "NONE"
     endif
-    return " " . myHead
+  else
+    return toupper(&fileencoding)
+  endif
 endfunction
 
 set statusline=
 set statusline+=\ %f
-set statusline+=\ %m
+" set statusline+=\ %m
 set statusline+=\ %{MyGitStatus()}
-set statusline+=\ %{StatusDiagnostic()}
 set statusline+=\ %{get(b:,'coc_current_function','')}
 set statusline+=\%= " separator
 set statusline+=\ %{ObsessionStatus()}
-set statusline+=\ FT:\ %Y
-set statusline+=\ BN:\ %n
-set statusline+=\ LN:\ %l
-set statusline+=\ CN:\ %v
+set statusline+=\ %{StatusDiagnostic()}
+set statusline+=\ %{MyFileEncode()}
+set statusline+=\ %Y
+set statusline+=\ %l:\%v
 set statusline+=\ 
-
 
 
 
@@ -276,7 +302,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 " ==============================================================================
 
 "取消markdown的折叠
-let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_folding_disabled=0
 
 " syntax conceal
 set conceallevel=0
@@ -286,7 +312,9 @@ let g:vim_markdown_math = 1
 let g:vim_markdown_frontmatter = 1
 " strikethrough
 let g:vim_markdown_strikethrough = 1
-highlight htmlBold gui=bold guifg=orange
+highlight htmlBold gui=bold guifg=#fe8019
+highlight htmlItalic gui=bold guifg=#458588
+highlight htmlLink guifg=#83a598 cterm=underline gui=underline
 
 
 
@@ -313,7 +341,8 @@ endfunction
 " inoremap <silent><expr> <c-space> coc#refresh()
 
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 "上下错误跳转
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -397,14 +426,14 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 let g:coc_global_extensions = [
-    \ 'coc-vimlsp',
-    \ 'coc-snippets',
-    \ 'coc-pyright',
-    \ 'coc-json',
-    \ 'coc-java',
-    \ 'coc-explorer',
-    \ 'coc-pairs',
-    \ 'coc-highlight']
+      \ 'coc-vimlsp',
+      \ 'coc-snippets',
+      \ 'coc-pyright',
+      \ 'coc-json',
+      \ 'coc-java',
+      \ 'coc-explorer',
+      \ 'coc-pairs',
+      \ 'coc-highlight']
 
 imap <C-l> <Plug>(coc-snippets-expand)
 vmap <C-e> <Plug>(coc-snippets-select)
@@ -427,9 +456,9 @@ let g:gitgutter_sign_modified = '░'
 let g:gitgutter_sign_removed = '▎'
 let g:gitgutter_sign_removed_first_line = '▔'
 let g:gitgutter_sign_modified_removed = '▒'
-highlight GitGutterAdd    guifg=#3EC70B ctermfg=2
-highlight GitGutterChange guifg=#F7EC09 ctermfg=3
-highlight GitGutterDelete guifg=#FF5B00 ctermfg=1
+highlight GitGutterAdd    guifg=#8ec07c ctermfg=108
+highlight GitGutterChange guifg=#fabd2f ctermfg=214
+highlight GitGutterDelete guifg=#cc241d ctermfg=124
 
 
 " ==============================================================================
@@ -448,9 +477,9 @@ let g:vista_default_executive = 'coc'
 let g:vista_fzf_preview = ['right:50%']
 let g:vista#renderer#enable_icon = 1
 let g:vista#renderer#icons = {
-\   "function": "\uf794",
-\   "variable": "\uf71b",
-\  }
+      \   "function": "\uf794",
+      \   "variable": "\uf71b",
+      \  }
 
 
 " ==============================================================================
@@ -467,7 +496,8 @@ let g:vista#renderer#icons = {
 
 " nmap <leader>e :CocCommand explorer<CR>
 " nmap <leader>f :CocCommand explorer --preset floating<CR>
-" autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+" if just remain coc-explorer in the buffer, close nvim.
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
 
 
 " ==============================================================================
@@ -532,26 +562,31 @@ nmap f <Plug>(easymotion-s)
 
 lua << EOF
 require("bufferline").setup{
-  options = {
-    mode = "buffers",
-    numbers = "ordinal",
-    diagnostic = "coc",
-    color_icons = true,
-    always_show_bufferline = true,
-    offsets = {
-      {
+options = {
+  mode = "buffers",
+  numbers = "ordinal",
+  diagnostic = "coc",
+  color_icons = true,
+  always_show_bufferline = true,
+  offsets = {
+    {
         filetype = "coc-explorer",
         text = "Coc Explorer",
         highlight = "Directory",
         text_align = "left"
-      }
+    }
     }
   }
 }
 EOF
 
-highlight BufferLineFill cterm=reverse ctermfg=239 ctermbg=223 
-highlight BufferLineFill gui=reverse guifg=#504945 guibg=#ebdbb2
+" link to Statusline
+" gruvbox
+" highlight BufferLineFill cterm=reverse ctermfg=239 ctermbg=223 
+" highlight BufferLineFill gui=reverse guifg=#504945 guibg=#ebdbb2
+
+" github_dark
+highlight BufferLineFill guibg=#24292e
 
 " nnoremap <silent>[b :BufferLineCycleNext<CR>
 " nnoremap <silent>b] :BufferLineCyclePrev<CR>
@@ -573,9 +608,9 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 lua << EOF
 require('nvim-treesitter.configs').setup{
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
+highlight = {
+  enable = true,
+  additional_vim_regex_highlighting = false,
   }
 }
 EOF
@@ -585,14 +620,14 @@ EOF
 " ==============================================================================
 lua << EOF
 require("toggleterm").setup{
-  size = 20,
-  open_mapping = [[<c-\>]],
-  direction = 'float',
-  close_on_exit = true,
+size = 20,
+open_mapping = [[<c-\>]],
+direction = 'float',
+close_on_exit = true,
 }
 EOF
 function! Mterm() abort
-    :ToggleTerm direction=horizontal
+  :ToggleTerm direction=horizontal
 endfunction
 command! Mterm call Mterm()
 
