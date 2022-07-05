@@ -1,10 +1,8 @@
---local fn = vim.fn
---local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
---[[
+local fn = vim.fn
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
-]]
 
 return require('packer').startup(function(use)
   -- My plugins here
@@ -15,6 +13,7 @@ return require('packer').startup(function(use)
   -- lsp
   use "williamboman/nvim-lsp-installer"
   use 'neovim/nvim-lspconfig'
+  use 'mfussenegger/nvim-jdtls'
 
   -- complete
   use 'hrsh7th/cmp-nvim-lsp'
@@ -44,10 +43,11 @@ return require('packer').startup(function(use)
   use { 'tpope/vim-surround' }
   use { 'tpope/vim-commentary' }
   use { 'kshenoy/vim-signature' }
-  use { 'easymotion/vim-easymotion' }
+  use { "windwp/nvim-autopairs" }
+  use 'norcalli/nvim-colorizer.lua'
   use {
-    "windwp/nvim-autopairs",
-    config = function() require("nvim-autopairs").setup {} end
+    'phaazon/hop.nvim',
+    branch = 'v1', -- optional but strongly recommended
   }
 
   -- git
@@ -75,16 +75,13 @@ return require('packer').startup(function(use)
   use {
     'goolord/alpha-nvim',
     requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function ()
-      require'alpha'.setup(require'alpha.themes.startify'.config)
-    end
   }
 
   -- fuzzy finder
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
-  }
+  use 'nvim-lua/plenary.nvim'
+  use 'nvim-lua/popup.nvim'
+  use { 'nvim-telescope/telescope.nvim' }
+  use 'nvim-telescope/telescope-media-files.nvim'
 
   -- session
   use { 'tpope/vim-obsession' }

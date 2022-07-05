@@ -5,6 +5,7 @@
 require("keybindings")
 require("settings")
 require("plugins")
-require("plugconfigs")
+-- require("plugconfigs")
+require("plugconf")
 require("lsp")
 
