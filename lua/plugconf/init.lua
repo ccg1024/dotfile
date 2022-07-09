@@ -13,4 +13,6 @@ require("plugconf.ultisnips")
 require("plugconf.nvim-colorizer")
 require("plugconf.nvim-telescope-media")
 require("plugconf.hop")
+require("plugconf.vista")
+require("plugconf.nvim-web-devicon")
 

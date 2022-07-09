@@ -49,6 +49,7 @@ return require('packer').startup(function(use)
     'phaazon/hop.nvim',
     branch = 'v1', -- optional but strongly recommended
   }
+  use { 'liuchengxu/vista.vim' }
 
   -- git
   use { 'airblade/vim-gitgutter' }

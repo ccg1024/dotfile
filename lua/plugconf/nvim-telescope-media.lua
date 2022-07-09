@@ -1,4 +1,10 @@
+-- to avoid two setup{}, add any config of telescope in here.
 require'telescope'.setup {
+  defaults = {
+    prompt_prefix = ' ',
+    selection_caret = " ",
+    path_display = { "smart" },
+  },
   extensions = {
     media_files = {
       -- filetypes whitelist

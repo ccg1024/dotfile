@@ -110,6 +110,14 @@ function! LspErrors() abort
   return sl
 endfunction
 
+function! NearestMethodOrFunction() abort
+  let nerFuc = get(b:, 'vista_nearest_method_or_function', '')
+  if empty(nerFuc)
+    return ''
+  end
+  return ' ' . nerFuc
+endfunction
+
 highlight STATUSCOLOR cterm=reverse ctermfg=142 ctermbg=235 gui=reverse guifg=#b8bb26 guibg=#282828
 
 " icon ﰂ 8  
@@ -118,6 +126,7 @@ set statusline+=%#STATUSCOLOR#
 set statusline+=\ %t
 " set statusline+=\ %m
 set statusline+=\ %{MyGitStatus()}
+set statusline+=\ %{NearestMethodOrFunction()}
 set statusline+=\%= " separator
 set statusline+=\ %{LspErrors()}
 set statusline+=\ %{LspWarns()}
