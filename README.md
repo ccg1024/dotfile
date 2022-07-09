@@ -1,8 +1,18 @@
-![screenshot](github_neovim_theme.png)
+![lsp](./img/lsp.png)
 
-- `vimrc`: 没更新
-- `init.vim`: 同步arch上nvim配置
-- `init.mac.vim`: 同步mac上nvim配置
+![nvim-tree](./img/nvim-tree.png)
+
+![fzf](./img/fzf.png "telescope")
+
+**!!! 将配置文件转为lua，用nvim自带的lsp替代coc**
+
+- `init.lua`: nvim起始配置文件
+- `IDEA` : IDEA等系列编辑器vim配置
+- `coc` : coc配置文件
+- `tmux` : tmux配置文件
+- `Ultisnips` : 自定义的snips文件
+- `vimL` : 旧的.vim配置
+- `ftplugin`, `lua`, `plugin` : 配置文件的转lua后新建立的文件
 
 
 # vim
@@ -66,6 +76,3 @@ endfunction
 - `*` 或 `#` 能够快速进行全字匹配，是一个快速搜索按键，若在前面加上 `g` 则是普通的字符匹配，只要包含该词的部分，都会显示；
 - 通过命令行的方式进行全字匹配（普通搜索都不是全字，只要部分有都会显示）：`/\<word\>` ，该命令从光标向下查找单词 word ，字符 `?` 是向上搜索，操作同向下搜索；
 
-# ranger.vim
-
-只是一个调用插件，需要自行安装Ranger。
