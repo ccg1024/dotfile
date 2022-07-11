@@ -15,4 +15,6 @@ require("plugconf.nvim-telescope-media")
 require("plugconf.hop")
 require("plugconf.vista")
 require("plugconf.nvim-web-devicon")
+require("plugconf.ranger")
+require("plugconf.illuminate")
 

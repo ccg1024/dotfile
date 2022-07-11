@@ -30,5 +30,8 @@ local config = {
   init_options = {
     bundles = {}
   },
+  on_attach = function(client)
+    require 'illuminate'.on_attach(client)
+  end,
 }
 require('jdtls').start_or_attach(config)

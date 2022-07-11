@@ -21,6 +21,10 @@ local function on_attach(client, bufnr) -- set up buffer keymaps, etc.
   --vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   -- vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+  --
+  -- set up for illuminate
+  -- require 'illuminate'.on_attach(client)
+  require("illuminate").on_attach(client)
 end
 
 local lsp_flags = {

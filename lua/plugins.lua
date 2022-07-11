@@ -4,10 +4,11 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
+vim.cmd [[packadd packer.nvim]]
+
 return require('packer').startup(function(use)
   -- My plugins here
-  -- use 'foo1/bar1.nvim'
-  -- use 'foo2/bar2.nvim'
+  use 'wbthomason/packer.nvim'
   use 'kyazdani42/nvim-tree.lua'
 
   -- lsp
@@ -50,6 +51,7 @@ return require('packer').startup(function(use)
     branch = 'v1', -- optional but strongly recommended
   }
   use { 'liuchengxu/vista.vim' }
+  use { 'RRethy/vim-illuminate' }
 
   -- git
   use { 'airblade/vim-gitgutter' }
@@ -91,6 +93,10 @@ return require('packer').startup(function(use)
   use {"akinsho/toggleterm.nvim", tag = 'v1.*', config = function()
     require("toggleterm").setup()
   end}
+
+  -- ranger
+  use { 'rbgrouleff/bclose.vim' }
+  use { 'francoiscabrol/ranger.vim' }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

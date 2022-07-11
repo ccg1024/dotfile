@@ -135,7 +135,7 @@ set statusline+=\ %{ObsessionStatus()}
 set statusline+=\ SPACE:\ %{&tabstop}
 set statusline+=\ %{MyFileEncode()}
 set statusline+=\ %Y
-set statusline+=\ %l:\%v
+set statusline+=\%4l:\%-2v
 set statusline+=\ 
 ]])
 
