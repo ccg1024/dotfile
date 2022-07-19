@@ -31,8 +31,14 @@ vim.api.nvim_set_keymap("n", "<leader>n", ":NvimTreeToggle<CR>", { noremap = tru
 vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true })
 vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true })
 
--- TAB complete
---vim.api.nvim_set_keymap("i", "<expr><TAB>", "pumvisible() ? \"\\<C-n>\" : \"\\<TAB>\"", { noremap = true, silent = true })
+-- remap H, L
+vim.api.nvim_set_keymap("n", "H", "^", { noremap = true })
+vim.api.nvim_set_keymap("n", "L", "$", { noremap = true })
+vim.api.nvim_set_keymap("n", "yL", "y$", { noremap = true })
+vim.api.nvim_set_keymap("n", "yH", "y^", { noremap = true })
+vim.api.nvim_set_keymap("v", "H", "^", { noremap = true })
+vim.api.nvim_set_keymap("v", "L", "$", { noremap = true })
+
 
 -- for lspconfig comment keymap
 local opts = { noremap=true, silent=true }

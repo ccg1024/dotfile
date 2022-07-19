@@ -15,4 +15,4 @@ options = {
     }
   }
 }
-vim.cmd([[ highlight BufferLineFill guibg=#282828 ]])
+-- vim.cmd([[ highlight BufferLineFill guibg=#282828 ]])

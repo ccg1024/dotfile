@@ -1,8 +1,8 @@
 require("nvim-lsp-installer").setup{}
 
 local lspconfig = require("lspconfig")
+local navic = require("nvim-navic")
 local function on_attach(client, bufnr) -- set up buffer keymaps, etc.
-
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
@@ -25,6 +25,9 @@ local function on_attach(client, bufnr) -- set up buffer keymaps, etc.
   -- set up for illuminate
   -- require 'illuminate'.on_attach(client)
   require("illuminate").on_attach(client)
+
+  -- nvim-nvic
+  navic.attach(client, bufnr)
 end
 
 local lsp_flags = {

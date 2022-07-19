@@ -5,7 +5,9 @@ vim.opt.termguicolors=true
 --gruvbox
 vim.g.gruvbox_contrast_dark='dark'
 vim.g.gruvbox_sign_column='bg0'
-vim.cmd('colorscheme gruvbox')
+-- change scheme in catppuccin.lua file.
+-- vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+-- vim.cmd('colorscheme catppuccin')
 
 
 -- nomal set
@@ -55,87 +57,3 @@ vim.g.python3_host_prog = "/usr/bin/python3"
 
 -- vimL
 vim.cmd('autocmd FileType lua,vim set shiftwidth=2 tabstop=2 softtabstop=2')
-vim.cmd([[
-function! MyGitStatus() abort
-  let myHead = FugitiveStatusline()
-  if empty(myHead)
-    return ' [Normal File]'
-  endif
-  let [a,m,r] = GitGutterGetHunkSummary()
-  return " " . myHead . printf(' ﰂ %d  %d  %d', a, m, r)
-endfunction
-
-function! MyFileEncode() abort
-  if &fileencoding == ""
-    if &encoding != ""
-      return toupper(&encoding)
-    else
-      return "NONE"
-    endif
-  else
-    return toupper(&fileencoding)
-  endif
-endfunction
-
-function! LspHints() abort
-  let sl = ''
-  if luaeval('not vim.tbl_isempty(vim.lsp.buf_get_clients(0))')
-    let sl.=':'
-    let sl.= luaeval("#vim.diagnostic.get(0, { severity=vim.diagnostic.severity.HINT })")
-  else
-    let sl.=''
-  endif
-  return sl
-endfunction
-
-function! LspWarns() abort
-  let sl = ''
-  if luaeval('not vim.tbl_isempty(vim.lsp.buf_get_clients(0))')
-    let sl.=':'
-    let sl.= luaeval("#vim.diagnostic.get(0, { severity=vim.diagnostic.severity.WARN })")
-  else
-    let sl.=''
-  endif
-  return sl
-endfunction
-
-function! LspErrors() abort
-  let sl = ''
-  if luaeval('not vim.tbl_isempty(vim.lsp.buf_get_clients(0))')
-    let sl.=':'
-    let sl.= luaeval("#vim.diagnostic.get(0, { severity=vim.diagnostic.severity.ERROR })")
-  else
-    let sl.=''
-  endif
-  return sl
-endfunction
-
-function! NearestMethodOrFunction() abort
-  let nerFuc = get(b:, 'vista_nearest_method_or_function', '')
-  if empty(nerFuc)
-    return ''
-  end
-  return ' ' . nerFuc
-endfunction
-
-highlight STATUSCOLOR cterm=reverse ctermfg=142 ctermbg=235 gui=reverse guifg=#b8bb26 guibg=#282828
-
-" icon ﰂ 8  
-set statusline=
-set statusline+=%#STATUSCOLOR#
-set statusline+=\ %t
-" set statusline+=\ %m
-set statusline+=\ %{MyGitStatus()}
-set statusline+=\ %{NearestMethodOrFunction()}
-set statusline+=\%= " separator
-set statusline+=\ %{LspErrors()}
-set statusline+=\ %{LspWarns()}
-set statusline+=\ %{LspHints()}
-set statusline+=\ %{ObsessionStatus()}
-set statusline+=\ SPACE:\ %{&tabstop}
-set statusline+=\ %{MyFileEncode()}
-set statusline+=\ %Y
-set statusline+=\%4l:\%-2v
-set statusline+=\ 
-]])
-

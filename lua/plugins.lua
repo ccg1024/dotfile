@@ -39,6 +39,10 @@ return require('packer').startup(function(use)
   -- theme
   use 'morhetz/gruvbox'
   use ({ 'projekt0n/github-nvim-theme' })
+  use ({
+    "catppuccin/nvim",
+    as = "catppuccin"
+  })
 
   -- some tool
   use { 'tpope/vim-surround' }
@@ -50,12 +54,18 @@ return require('packer').startup(function(use)
     'phaazon/hop.nvim',
     branch = 'v1', -- optional but strongly recommended
   }
-  use { 'liuchengxu/vista.vim' }
+  -- use { 'liuchengxu/vista.vim' }
+  use { 'simrat39/symbols-outline.nvim' }  -- vista alternative
   use { 'RRethy/vim-illuminate' }
+  use { 'SmiteshP/nvim-navic' }
 
   -- git
-  use { 'airblade/vim-gitgutter' }
-  use { 'tpope/vim-fugitive' }
+  -- use { 'airblade/vim-gitgutter' }
+  -- use { 'tpope/vim-fugitive' }
+  use { -- lua plugin
+    'lewis6991/gitsigns.nvim',
+    -- tag = 'release' -- To use the latest release
+  }
 
   -- python
   use { 'Vimjas/vim-python-pep8-indent' }

@@ -1,4 +1,5 @@
 vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree", "DressingSelect" }
+vim.g.Illuminate_ftwhitelist = { 'vim', 'sh', 'python', 'lua', 'java' }
 vim.cmd([[
 augroup illuminate_augroup
     autocmd!

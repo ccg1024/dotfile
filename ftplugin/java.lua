@@ -3,6 +3,8 @@
 
 -- local workspace_dir = '/path/to/workspace-root/' .. project_name
 
+local navic = require("nvim-navic")
+
 local config = {
   cmd = {
     'java',
@@ -30,8 +32,10 @@ local config = {
   init_options = {
     bundles = {}
   },
-  on_attach = function(client)
+  on_attach = function(client, bufnr)
     require 'illuminate'.on_attach(client)
+    -- nvim-nvic
+    navic.attach(client, bufnr)
   end,
 }
 require('jdtls').start_or_attach(config)
