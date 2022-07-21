@@ -1,5 +1,35 @@
 -- reference site
 -- https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
+
+-- mode map
+local modes = {
+  ["n"] = "NORMAL",
+  ["no"] = "NORMAL",
+  ["v"] = "VISUAL",
+  ["V"] = "VISUAL LINE",
+  [""] = "VISUAL BLOCK",
+  ["s"] = "SELECT",
+  ["S"] = "SELECT LINE",
+  [""] = "SELECT BLOCK",
+  ["i"] = "INSERT",
+  ["ic"] = "INSERT",
+  ["R"] = "REPLACE",
+  ["Rv"] = "VISUAL REPLACE",
+  ["c"] = "COMMAND",
+  ["cv"] = "VIM EX",
+  ["ce"] = "EX",
+  ["r"] = "PROMPT",
+  ["rm"] = "MOAR",
+  ["r?"] = "CONFIRM",
+  ["!"] = "SHELL",
+  ["t"] = "TERMINAL",
+}
+
+local function Mymode()
+  local current_mode = vim.api.nvim_get_mode().mode
+  return string.format(" %s ", modes[current_mode]):upper()
+end
+
 local function LspHints()
   local sl = ''
   if not vim.tbl_isempty(vim.lsp.buf_get_clients(0)) then
@@ -64,9 +94,12 @@ end
 Statusline = {}
 -- vim.cmd('highlight STATUSCOLOR cterm=reverse ctermfg=142 ctermbg=235 gui=reverse guifg=#b8bb26 guibg=#282828')
 vim.cmd('highlight STATUSCOLOR guibg=#89b4fa guifg=#000000')
+vim.cmd('highlight MODECOLOR gui=bold guibg=#a6e3a1 guifg=#000000')
 
 Statusline.active = function ()
   return table.concat{
+    "%#MODECOLOR#",
+    Mymode(),
     "%#STATUSCOLOR#",
     " %t",
     "  %{get(b:,'gitsigns_status',' [Normal File]')}",
