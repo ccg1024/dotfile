@@ -1,3 +1,4 @@
+-- initial lsp server
 require("nvim-lsp-installer").setup{}
 
 local lspconfig = require("lspconfig")
@@ -38,6 +39,7 @@ local lsp_flags = {
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- start server
+-- lua
 lspconfig.sumneko_lua.setup {
   on_attach = on_attach,
   flags = lsp_flags,
@@ -60,6 +62,7 @@ lspconfig.sumneko_lua.setup {
   },
 }
 
+-- python
 lspconfig.pyright.setup {
   on_attach = on_attach,
   flags = lsp_flags,
@@ -76,7 +79,7 @@ lspconfig.pyright.setup {
   },
 }
 
--- use nvim-jdtls
+-- use nvim-jdtls for java
 -- lspconfig.jdtls.setup {
 --   on_attach = on_attach,
 --   flags = lsp_flags,
@@ -85,6 +88,6 @@ lspconfig.pyright.setup {
 
 -- change info style of lsp
 require("lsp.handlers").setup()
--- start cmp
+-- start nvim-cmp (completion)
 require("lsp.cmp")
 

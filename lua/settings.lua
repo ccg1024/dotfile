@@ -1,3 +1,4 @@
+-- some nvim options setting.
 -- colorscheme
 vim.opt.background="dark"
 vim.opt.termguicolors=true

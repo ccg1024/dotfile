@@ -1,3 +1,4 @@
+-- apply plugins config
 require("plugconf.nvim-tree")
 require("plugconf.bufferline")
 require("plugconf.github-theme")

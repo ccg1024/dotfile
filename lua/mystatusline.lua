@@ -1,3 +1,4 @@
+-- config my statusline content
 -- reference site
 -- https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
 

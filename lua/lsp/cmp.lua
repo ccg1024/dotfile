@@ -1,3 +1,4 @@
+-- nvim-cmp initial and start
 --   פּ ﯟ   some other good icons
 local kind_icons = {
   Text = "",

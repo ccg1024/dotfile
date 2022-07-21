@@ -1,3 +1,4 @@
+-- make key map.
 -- leader
 vim.g.mapleader = ' '
 
