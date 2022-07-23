@@ -2,9 +2,9 @@
 
 自用的nvim/vim,tmux等相关配置。
 
-![lsp](./img/lsp.png)
+![total](./img/total.png)
 
-![nvim-tree](./img/nvim-tree.png)
+![lsp](./img/lsp.png)
 
 ![fzf](./img/fzf.png "telescope")
 
