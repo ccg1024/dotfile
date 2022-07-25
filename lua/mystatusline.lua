@@ -26,6 +26,15 @@ local modes = {
   ["t"] = "TERMINAL",
 }
 
+local function MyUpdateColor()
+  local currentMode = vim.api.nvim_get_mode().mode
+  local modeColor = "%#MODECOLOR#"
+  if currentMode == "i" or currentMode == "ic" then
+    modeColor = "%#STATUSCOLOR#"
+  end
+  return modeColor
+end
+
 local function Mymode()
   local current_mode = vim.api.nvim_get_mode().mode
   return string.format(" %s ", modes[current_mode]):upper()
@@ -99,11 +108,11 @@ vim.cmd('highlight MODECOLOR gui=bold guibg=#a6e3a1 guifg=#000000')
 
 Statusline.active = function ()
   return table.concat{
-    "%#MODECOLOR#",
+    MyUpdateColor(),
     Mymode(),
     "%#STATUSCOLOR#",
     " %t",
-    "  %{get(b:,'gitsigns_status',' [Normal File]')}",
+    "  %{get(b:,'gitsigns_status','')}",
     "  %-0{%v:lua.require'nvim-navic'.get_location()%}",
     "%=",
     LspErrors(),
