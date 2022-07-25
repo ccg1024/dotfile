@@ -104,7 +104,7 @@ end
 Statusline = {}
 -- vim.cmd('highlight STATUSCOLOR cterm=reverse ctermfg=142 ctermbg=235 gui=reverse guifg=#b8bb26 guibg=#282828')
 vim.cmd('highlight STATUSCOLOR guibg=#89b4fa guifg=#000000')
-vim.cmd('highlight MODECOLOR gui=bold guibg=#a6e3a1 guifg=#000000')
+vim.cmd('highlight MODECOLOR gui=bold guibg=#1e1e2e guifg=#f9e2af')
 
 Statusline.active = function ()
   return table.concat{
