@@ -6,6 +6,18 @@
 
 -- show function info in statusliine
 local navic = require("nvim-navic")
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local function on_attach(client, bufnr) -- set up buffer keymaps, etc.
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  require("illuminate").on_attach(client)
+  navic.attach(client, bufnr)
+end
 
 local config = {
   cmd = {
@@ -32,10 +44,7 @@ local config = {
   init_options = {
     bundles = {}
   },
-  on_attach = function(client, bufnr) -- integrate plugin illuminate and nvim-nvic
-    require 'illuminate'.on_attach(client)
-    -- nvim-nvic
-    navic.attach(client, bufnr)
-  end,
+  on_attach = on_attach,
+  capabilities = capabilities,
 }
 require('jdtls').start_or_attach(config) -- start java lsp server
