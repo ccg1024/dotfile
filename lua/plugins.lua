@@ -7,7 +7,6 @@ end
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-  -- My plugins here
   use 'wbthomason/packer.nvim'
   use 'kyazdani42/nvim-tree.lua'
 
@@ -24,21 +23,24 @@ return require('packer').startup(function(use)
   use 'hrsh7th/nvim-cmp'
 
   -- snips
-  use {'SirVer/ultisnips',
-      requires = {{'honza/vim-snippets', rtp = '.'}},
-      config = function ()
-        vim.g.UltiSnipsExpandTrigger = '<Plug>(ultisnips_expand)'
-        vim.g.UltiSnipsJumpForwardTrigger = '<Plug>(ultisnips_jump_forward)'
-        vim.g.UltiSnipsJumpBackwardTrigger = '<Plug>(ultisnips_jump_backward)'
-        vim.g.UltiSnipsListSnippets = '<c-x><c-s>'
-        vim.g.UltiSnipsRemoveSelectModeMappings = 0
-      end
+  use { 'L3MON4D3/LuaSnip' }
+  use { 'saadparwaiz1/cmp_luasnip' }
+  use { 'rafamadriz/friendly-snippets' }
+
+
+  -- bufferline
+  use {
+    'akinsho/bufferline.nvim', tag = "v2.*",
+    requires = 'kyazdani42/nvim-web-devicons'
   }
-  use 'quangnguyen30192/cmp-nvim-ultisnips'
 
   -- theme
   use 'morhetz/gruvbox'
   use ({ 'projekt0n/github-nvim-theme' })
+  use {
+    'dracula/vim',
+    as = 'dracula',
+  }
   use ({
     "catppuccin/nvim",
     as = "catppuccin"
@@ -60,8 +62,6 @@ return require('packer').startup(function(use)
   use { 'SmiteshP/nvim-navic' }
 
   -- git
-  -- use { 'airblade/vim-gitgutter' }
-  -- use { 'tpope/vim-fugitive' }
   use { -- lua plugin
     'lewis6991/gitsigns.nvim',
     -- tag = 'release' -- To use the latest release
@@ -77,10 +77,6 @@ return require('packer').startup(function(use)
 
   -- ui
   use { 'lukas-reineke/indent-blankline.nvim' }
-  use {
-    'akinsho/bufferline.nvim', tag = "v2.*",
-    requires = 'kyazdani42/nvim-web-devicons'
-  }
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'
@@ -104,9 +100,11 @@ return require('packer').startup(function(use)
     require("toggleterm").setup()
   end}
 
-  -- ranger
-  use { 'rbgrouleff/bclose.vim' }
-  use { 'francoiscabrol/ranger.vim' }
+  -- latex
+  use { 'lervag/vimtex' }
+
+  -- myself plugin
+  use { 'ccg1024/myplugin' }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
