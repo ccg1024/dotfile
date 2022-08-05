@@ -1,11 +1,12 @@
 -- change status_formatter
 local function MyStatusFormatter(status)
-  local added, changed, removed, head = status.added, status.changed, status.removed, status.head
+  -- local added, changed, removed, head = status.added, status.changed, status.removed, status.head
+  local head = status.head
   local status_txt = {}
-  if head     then table.insert(status_txt, ' ['..head..']') end
-  if added    then table.insert(status_txt, 'ﰂ '..added  )    end
-  if changed  then table.insert(status_txt, ' '..changed)    end
-  if removed  then table.insert(status_txt, ' '..removed)    end
+  if head     then table.insert(status_txt, ' '..head) end
+  -- if added    then table.insert(status_txt, 'ﰂ '..added  )    end
+  -- if changed  then table.insert(status_txt, ' '..changed)    end
+  -- if removed  then table.insert(status_txt, ' '..removed)    end
   return table.concat(status_txt, ' ')
 end
 

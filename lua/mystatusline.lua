@@ -28,9 +28,11 @@ local modes = {
 
 local function MyUpdateColor()
   local currentMode = vim.api.nvim_get_mode().mode
-  local modeColor = "%#MODECOLOR#"
+  local modeColor = "%#MyStatusLineFlag#"
   if currentMode == "i" or currentMode == "ic" then
-    modeColor = "%#STATUSCOLOR#"
+    modeColor = "%#MyStatusLineFlagI#"
+  elseif currentMode == "v" or currentMode == "V" or currentMode == "" or currentMode == "Rv" then
+    modeColor = "%#MyStatusLineFlagV#"
   end
   return modeColor
 end
@@ -83,7 +85,7 @@ end
 -- end
 
 local function MyFileType()
-  return string.format(" %s ", vim.bo.filetype):upper()
+  return string.format(" %s", vim.bo.filetype)
 end
 
 local function MyLineInfo()
@@ -103,16 +105,21 @@ end
 
 Statusline = {}
 -- vim.cmd('highlight STATUSCOLOR cterm=reverse ctermfg=142 ctermbg=235 gui=reverse guifg=#b8bb26 guibg=#282828')
-vim.cmd('highlight STATUSCOLOR guibg=#89b4fa guifg=#000000')
-vim.cmd('highlight MODECOLOR gui=bold guibg=#1e1e2e guifg=#f9e2af')
+vim.cmd('highlight STATUSCOLOR guibg=#0096FF guifg=#F7F7F7')
+vim.cmd([[exec 'hi MODECOLOR gui=bold guifg=#eed49f guibg=' . synIDattr(synIDtrans(hlID('NvimTreeNormal')), 'bg', 'gui')]])
+vim.cmd('highlight MyStatusLineFlag guibg=#0096ff')
+vim.cmd('highlight MyStatusLineFlagI guibg=#F15412')
+vim.cmd('highlight MyStatusLineFlagV guibg=#FFFFDE')
 
 Statusline.active = function ()
   return table.concat{
     MyUpdateColor(),
+    " ",
     Mymode(),
-    "%#STATUSCOLOR#",
-    " %t",
+    "%#MODECOLOR#",
     "  %{get(b:,'gitsigns_status','')}",
+    "%=",
+    "%<",
     "  %-0{%v:lua.require'nvim-navic'.get_location()%}",
     "%=",
     LspErrors(),
@@ -123,6 +130,8 @@ Statusline.active = function ()
     MyEncode(),
     MyFileType(),
     MyLineInfo(),
+    MyUpdateColor(),
+    " ",
   }
 end
 -- vim.o.statusline = vim.o.statusline .. "%#STATUSCOLOR#"
