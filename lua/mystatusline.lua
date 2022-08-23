@@ -1,8 +1,8 @@
--- config my statusline content
+--  
 -- reference site
 -- https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
 
--- mode map
+-- model
 local modes = {
   ["n"] = "NORMAL",
   ["no"] = "NORMAL",
@@ -37,6 +37,17 @@ local function MyUpdateColor()
   return modeColor
 end
 
+local function MyIconColor()
+  local currentMode = vim.api.nvim_get_mode().mode
+  local IconColor = "%#MyFlagIcon#"
+  if currentMode == "i" or currentMode == "ic" then
+    IconColor = "%#MyFlagIconI#"
+  elseif currentMode == "v" or currentMode == "V" or currentMode == "" or currentMode == "Rv" then
+    IconColor = "%#MyFlagIconV#"
+  end
+  return IconColor
+end
+
 local function Mymode()
   local current_mode = vim.api.nvim_get_mode().mode
   return string.format(" %s ", modes[current_mode]):upper()
@@ -47,8 +58,8 @@ local function LspHints()
   if not vim.tbl_isempty(vim.lsp.buf_get_clients(0)) then
     sl = sl .. " :"
     sl = sl .. #vim.diagnostic.get(0, { severity=vim.diagnostic.severity.HINT })
-  else
-    sl = sl .. " "
+  -- else
+  --   sl = sl .. ""
   end
   return sl
 end
@@ -58,8 +69,8 @@ local function LspWarns()
   if not vim.tbl_isempty(vim.lsp.buf_get_clients(0)) then
     sl = sl .. " :"
     sl = sl .. #vim.diagnostic.get(0, { severity=vim.diagnostic.severity.WARN })
-  else
-    sl = sl .. " "
+  -- else
+  --   sl = sl .. ""
   end
   return sl
 end
@@ -69,8 +80,8 @@ local function LspErrors()
   if not vim.tbl_isempty(vim.lsp.buf_get_clients(0)) then
     sl = sl .. " :"
     sl = sl .. #vim.diagnostic.get(0, { severity=vim.diagnostic.severity.ERROR })
-  else
-    sl = sl .. " "
+  -- else
+  --   sl = sl .. ""
   end
   return sl
 end
@@ -92,7 +103,7 @@ local function MyLineInfo()
   if vim.bo.filetype == "alpha" then
     return ""
   end
-  return " %P %4l:%-2v "
+  return " %l:%v "
 end
 
 local function MyEncode()
@@ -110,13 +121,19 @@ vim.cmd([[exec 'hi MODECOLOR gui=bold guifg=#eed49f guibg=' . synIDattr(synIDtra
 vim.cmd('highlight MyStatusLineFlag guibg=#0096ff')
 vim.cmd('highlight MyStatusLineFlagI guibg=#F15412')
 vim.cmd('highlight MyStatusLineFlagV guibg=#FFFFDE')
+vim.cmd([[exec 'highlight MyFlagIcon guifg=#0096ff guibg=' . synIDattr(synIDtrans(hlID('MODECOLOR')), 'bg', 'gui')]])
+vim.cmd([[exec 'highlight MyFlagIconI guifg=#F15412 guibg=' . synIDattr(synIDtrans(hlID('MODECOLOR')), 'bg', 'gui')]])
+vim.cmd([[exec 'highlight MyFlagIconV guifg=#FFFFDE guibg=' . synIDattr(synIDtrans(hlID('MODECOLOR')), 'bg', 'gui')]])
 
 Statusline.active = function ()
   return table.concat{
     MyUpdateColor(),
     " ",
+    MyIconColor(),
+    " ",
     "%#MODECOLOR#",
     Mymode(),
+    "%m",
     " %{get(b:,'gitsigns_status','')}",
     "%=",
     "%<",
@@ -126,7 +143,7 @@ Statusline.active = function ()
     LspWarns(),
     LspHints(),
     " %{ObsessionStatus()}",
-    " SPACE: %{&tabstop}",
+    " Space: %{&tabstop}",
     MyEncode(),
     MyFileType(),
     MyLineInfo(),
