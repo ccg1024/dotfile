@@ -49,14 +49,12 @@ return require('packer').startup(function(use)
   -- some tool
   use { 'tpope/vim-surround' }
   use { 'tpope/vim-commentary' }
-  use { 'kshenoy/vim-signature' }
   use { "windwp/nvim-autopairs" }
   use 'norcalli/nvim-colorizer.lua'
   use {
     'phaazon/hop.nvim',
     branch = 'v1', -- optional but strongly recommended
   }
-  -- use { 'liuchengxu/vista.vim' }
   use { 'simrat39/symbols-outline.nvim' }  -- vista alternative
   use { 'RRethy/vim-illuminate' }
   use { 'SmiteshP/nvim-navic' }
@@ -96,15 +94,15 @@ return require('packer').startup(function(use)
   use { 'tpope/vim-obsession' }
 
   -- term
-  use {"akinsho/toggleterm.nvim", tag = 'v1.*', config = function()
-    require("toggleterm").setup()
-  end}
+  -- use {"akinsho/toggleterm.nvim", tag = 'v1.*', config = function()
+  --   require("toggleterm").setup()
+  -- end}
 
   -- latex
-  use { 'lervag/vimtex' }
+  -- use { 'lervag/vimtex' }
 
   -- myself plugin
-  use { 'ccg1024/myplugin' }
+  -- use { 'ccg1024/myplugin' }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

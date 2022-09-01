@@ -13,7 +13,7 @@ vim.g.gruvbox_sign_column='bg0'
 
 -- nomal set
 vim.opt.number=true
-vim.opt.wrap=true
+vim.opt.wrap=false
 vim.opt.smartindent=true
 vim.opt.autoindent=true
 vim.opt.showcmd=true
@@ -36,7 +36,6 @@ vim.opt.shiftwidth=4
 vim.opt.updatetime=100
 
 vim.opt.encoding="utf-8"
-vim.opt.mouse="a"
 vim.opt.virtualedit="block"
 vim.opt.signcolumn="yes"
 vim.opt.path:append("**")
