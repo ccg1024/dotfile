@@ -99,6 +99,17 @@ local function MyEncode()
   return string.format(" %s" , string.upper(fileEncode))
 end
 
+local function MyReadonly()
+  -- :set ro into readonly model
+  -- :set noro exit readonly model
+  local readonly = vim.bo.readonly
+  if readonly == true then
+    return string.format("%s", "")
+  else
+    return ""
+  end
+end
+
 Statusline = {}
 vim.cmd([[exec 'hi MODECOLOR gui=bold guifg=#eed49f guibg=' . synIDattr(synIDtrans(hlID('NvimTreeNormal')), 'bg', 'gui')]])
 vim.cmd('highlight MyStatusLineFlag guibg=#0096ff')
