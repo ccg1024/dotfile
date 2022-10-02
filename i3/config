@@ -11,17 +11,24 @@
 
 # self-config
 gaps inner 6
-gaps outer 8
+gaps outer 10
 
 focus_follows_mouse no
 
-default_border pixel 0
+default_border pixel 3
+# after upgrade i3-gaps to 4.20.1-2 version, some app cannot hidden title bar issue
+# this config below will also add border for electronic based app, which not add border when using `default_border` config.
+# for_window [class=Alacritty] border pixel 3
+# for_window [class=Google-chrome] border pixel 3
+for_window [all] border pixel 3
+
 # default_floating_border none
 # color code: #346751 #F2F2F2 #383838
 # border backgr. text 是控制窗口标签样式的，当前使用的是没有窗口标签的模式
 # indicator child_border 分别窗口最右边边框颜色，其他边框颜色
 # class                 border  backgr. text    indicator child_border
-client.focused          #ca9ee6 #b5bfe2 #000000 #ca9ee6   #ca9ee6
+client.focused          #ca9ee6 #b5bfe2 #000000 #b5bfe2   #b5bfe2
+client.unfocused        #383838 #383838 #888888 #585b70   #585b70
 
 # client.focused          #F2F2F2 #000000 #ffffff #F2F2F2   #F2F2F2
 # client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
@@ -30,9 +37,10 @@ client.focused          #ca9ee6 #b5bfe2 #000000 #ca9ee6   #ca9ee6
 # client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 # client.background       #ffffff
 
-# exec_always --no-startup-id picom -b --config ~/.config/picom/picomr.conf
 exec_always --no-startup-id ~/.config/i3/polybar.sh &
-# set killall polybar
+
+
+
 
 # Mod1-Alt Mod4-win
 set $mod Mod1
@@ -78,7 +86,7 @@ floating_modifier $mod
 
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec --no-startup-id alacritty
 
 # set scratchpad
 bindsym $mod+Shift+g move scratchpad
