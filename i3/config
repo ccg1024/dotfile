@@ -80,6 +80,9 @@ exec --no-startup-id nm-applet
 
 # key-bind self
 bindsym Print exec --no-startup-id flameshot gui
+bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -q sset Master,0 656+ unmute"
+bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -q sset Master,0 656- unmute"
+bindsym XF86AudioMute exec --no-startup-id "amixer -q sset Master,0 toggle"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
