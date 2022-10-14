@@ -45,6 +45,9 @@ return require('packer').startup(function(use)
     "catppuccin/nvim",
     as = "catppuccin"
   })
+  use 'overcache/NeoSolarized'
+  use 'navarasu/onedark.nvim'
+  use 'sainnhe/gruvbox-material'
 
   -- some tool
   use { 'tpope/vim-surround' }
@@ -103,6 +106,27 @@ return require('packer').startup(function(use)
 
   -- myself plugin
   -- use { 'ccg1024/myplugin' }
+
+  -- ranger
+  use { 'rbgrouleff/bclose.vim' }
+  use { 'francoiscabrol/ranger.vim' }
+
+  -- for notice
+  use({
+    "folke/noice.nvim",
+    event = "VimEnter",
+    requires = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    }
+  })
+
+  -- statusline
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
