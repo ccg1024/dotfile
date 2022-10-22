@@ -4,6 +4,16 @@ require'telescope'.setup {
     prompt_prefix = ' ',
     selection_caret = " ",
     path_display = { "smart" },
+    layout_strategy = 'vertical',
+    layout_config = { height = 0.75, width = 0.5 },
+    mappings = {
+      n = {
+        ['<c-d>'] = require('telescope.actions').delete_buffer,
+      },
+      i = {
+        ['<c-d>'] = require('telescope.actions').delete_buffer,
+      }
+    },
   },
   extensions = {
     media_files = {
