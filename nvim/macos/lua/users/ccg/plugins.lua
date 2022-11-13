@@ -10,6 +10,8 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   -- use 'kyazdani42/nvim-tree.lua'
+  -- icon
+  use 'nvim-tree/nvim-web-devicons'
 
   -- lsp
   use "williamboman/nvim-lsp-installer"
@@ -36,18 +38,18 @@ return require('packer').startup(function(use)
   -- }
 
   -- theme
-  use 'morhetz/gruvbox'
-  use({ 'projekt0n/github-nvim-theme' })
-  use {
-    'dracula/vim',
-    as = 'dracula',
-  }
-  use({
-    "catppuccin/nvim",
-    as = "catppuccin"
-  })
-  use 'svrana/neosolarized.nvim'
-  use 'navarasu/onedark.nvim'
+  -- use 'morhetz/gruvbox'
+  -- use({ 'projekt0n/github-nvim-theme' })
+  -- use {
+  --   'dracula/vim',
+  --   as = 'dracula',
+  -- }
+  -- use({
+  --   "catppuccin/nvim",
+  --   as = "catppuccin"
+  -- })
+  -- use 'svrana/neosolarized.nvim'
+  -- use 'navarasu/onedark.nvim'
   use 'sainnhe/gruvbox-material'
 
   -- for color
@@ -59,20 +61,13 @@ return require('packer').startup(function(use)
   use { 'kshenoy/vim-signature' }
   use { "windwp/nvim-autopairs" }
   use 'norcalli/nvim-colorizer.lua'
-  use {
-    'phaazon/hop.nvim',
-    branch = 'v1', -- optional but strongly recommended
-  }
-  -- use { 'liuchengxu/vista.vim' }
+  use { 'phaazon/hop.nvim', branch = 'v1', }
   use { 'simrat39/symbols-outline.nvim' } -- vista alternative
   use { 'RRethy/vim-illuminate' }
   use { 'SmiteshP/nvim-navic' }
 
   -- git
-  use { -- lua plugin
-    'lewis6991/gitsigns.nvim',
-    -- tag = 'release' -- To use the latest release
-  }
+  use { 'lewis6991/gitsigns.nvim', }
 
   -- python
   use { 'Vimjas/vim-python-pep8-indent' }

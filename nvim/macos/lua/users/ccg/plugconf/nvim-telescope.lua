@@ -13,7 +13,8 @@ local fb_actions = require('telescope').extensions.file_browser.actions
 
 require 'telescope'.setup {
   defaults = {
-    prompt_prefix = ' ',
+    initial_mode = 'normal',
+    prompt_prefix = '  ',
     selection_caret = " ",
     path_display = { "smart" },
     layout_strategy = 'vertical',
@@ -22,6 +23,7 @@ require 'telescope'.setup {
       ['n'] = {
         ['<c-d>'] = actions.delete_buffer,
         ['q'] = actions.close,
+        ['l'] = actions.select_default,
       },
       ['i'] = {
         ['<c-d>'] = actions.delete_buffer,
@@ -42,6 +44,7 @@ require 'telescope'.setup {
           ['N'] = fb_actions.create,
           ['h'] = fb_actions.goto_parent_dir,
           ['/'] = function() vim.cmd('startinsert') end,
+          ['H'] = fb_actions.toggle_hidden,
         }
       }
     },
@@ -57,7 +60,7 @@ vim.api.nvim_set_keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin'
 vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
 vim.api.nvim_set_keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
 vim.keymap.set('n', '<leader>n',
-  '<cmd>lua require("telescope").extensions.file_browser.file_browser({ path = "%:p:h", cwd = telescope_buffer_dir(), respect_git_ignore = false, hidden = true, grouped = true, previewer = false, initial_mode = "normal", layout_config = { height = 40 } })<cr>'
+  '<cmd>lua require("telescope").extensions.file_browser.file_browser({ path = "%:p:h", cwd = telescope_buffer_dir(), respect_git_ignore = false, hidden = true, grouped = true, previewer = false, initial_mode = "normal", layout_config = { height = 0.6 } })<cr>'
   , opts)
 -- open file with vertical split <c-v>
 -- optn file with horizontal split <c-x>

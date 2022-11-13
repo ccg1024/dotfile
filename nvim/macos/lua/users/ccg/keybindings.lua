@@ -38,9 +38,6 @@ vim.api.nvim_set_keymap('n', '<ScrollWheelDown>', '5j', { noremap = true, silent
 -- do not yank with x
 vim.keymap.set('n', 'x', '"_x')
 
--- delete a word with no yank
-vim.keymap.set('n', 'dw', 'vaw"_d')
-
 -- Increment/Decrement
 vim.keymap.set('n', '+', '<C-a>')
 vim.keymap.set('n', '-', '<C-x>')

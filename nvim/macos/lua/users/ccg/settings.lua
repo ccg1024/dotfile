@@ -27,7 +27,7 @@ vim.opt.swapfile = false
 vim.opt.showmode = false
 vim.opt.ignorecase = true
 
-vim.opt.laststatus = 3
+vim.opt.laststatus = 2
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
@@ -62,3 +62,11 @@ vim.cmd('autocmd FileType java,c,cpp,python set shiftwidth=4 tabstop=4 softtabst
 vim.opt.winblend = 0
 vim.opt.wildoptions = 'pum'
 vim.opt.pumblend = 5
+vim.opt.inccommand = 'split'
+vim.opt.backspace = 'start,eol,indent'
+
+vim.opt.formatoptions:append { 'r' }
+vim.opt.shell = 'zsh'
+vim.scriptencoding = 'utf-8'
+vim.opt.fileencoding = 'utf-8'
+vim.opt.scrolloff = 10 -- make sure the screen move when the cursor going to top or bottom
