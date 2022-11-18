@@ -1,5 +1,4 @@
 require("users.ccg.plugconf.vim-markdown")
-require("users.ccg.plugconf.indent-blankline")
 require("users.ccg.plugconf.nvim-telescope")
 require("users.ccg.plugconf.toggleterm")
 require("users.ccg.plugconf.treesitter")

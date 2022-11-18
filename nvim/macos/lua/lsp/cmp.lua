@@ -46,6 +46,14 @@ end
 --   return
 -- end
 local luasnip = require("luasnip")
+local term_app = os.getenv("IS_ALACRITTY")
+
+local myCompleteHighlight = "Normal:CursorLine,FloatBorder:FloatBorder,CursorLine:Visual,Search:None"
+if term_app == "1" then
+  myCompleteHighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None"
+end
+
+vim.cmd [[highlight myTestHi guibg=red guifg=white]]
 
 cmp.setup {
   snippet = {
@@ -55,8 +63,16 @@ cmp.setup {
     end,
   },
   window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
+    completion = {
+      border = "rounded",
+      -- winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None",
+      winhighlight = myCompleteHighlight,
+    },
+    -- documentation = cmp.config.window.bordered(),
+    documentation = {
+      border = "rounded",
+      winhighlight = myCompleteHighlight,
+    }
   },
   mapping = {
     ["<Tab>"] = cmp.mapping({

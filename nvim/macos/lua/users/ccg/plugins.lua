@@ -48,7 +48,7 @@ return require('packer').startup(function(use)
   --   "catppuccin/nvim",
   --   as = "catppuccin"
   -- })
-  -- use 'svrana/neosolarized.nvim'
+  use 'svrana/neosolarized.nvim'
   -- use 'navarasu/onedark.nvim'
   use 'sainnhe/gruvbox-material'
 
@@ -78,7 +78,7 @@ return require('packer').startup(function(use)
   use { "iamcco/markdown-preview.nvim" }
 
   -- ui
-  use { 'lukas-reineke/indent-blankline.nvim' }
+  -- use { 'lukas-reineke/indent-blankline.nvim' }
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'

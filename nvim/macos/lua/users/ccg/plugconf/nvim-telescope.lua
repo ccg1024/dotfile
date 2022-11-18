@@ -5,7 +5,7 @@ if (not status) then
 end
 local actions = require('telescope.actions')
 
-function telescope_buffer_dir()
+local function telescope_buffer_dir()
   return vim.fn.expand('%:p:h')
 end
 
@@ -32,6 +32,16 @@ require 'telescope'.setup {
   },
   extensions = {
     file_browser = {
+      path = "%:p:h",
+      cwd = telescope_buffer_dir(),
+      respect_git_ignore = false,
+      hidden = true,
+      grouped = true,
+      previewer = false,
+      initial_mode = "normal",
+      layout_config = {
+        height = 0.6,
+      },
       theme = "dropdown",
       -- disable netrw
       hijack_netrw = true,
@@ -59,8 +69,6 @@ vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require('telescope.builtin'
 vim.api.nvim_set_keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
 vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
 vim.api.nvim_set_keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-vim.keymap.set('n', '<leader>n',
-  '<cmd>lua require("telescope").extensions.file_browser.file_browser({ path = "%:p:h", cwd = telescope_buffer_dir(), respect_git_ignore = false, hidden = true, grouped = true, previewer = false, initial_mode = "normal", layout_config = { height = 0.6 } })<cr>'
-  , opts)
+vim.keymap.set('n', '<leader>n', '<cmd>lua require("telescope").extensions.file_browser.file_browser({})<cr>', opts)
 -- open file with vertical split <c-v>
 -- optn file with horizontal split <c-x>

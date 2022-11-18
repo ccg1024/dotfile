@@ -13,10 +13,10 @@ require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'auto',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
+    component_separators = { left = '', right = '' },
+    section_separators = { left = '', right = '' },
     disabled_filetypes = {
-      statusline = {'NvimTree', 'Outline'},
+      statusline = {},
       winbar = {},
     },
     ignore_focus = {},
@@ -29,32 +29,32 @@ require('lualine').setup {
     }
   },
   sections = {
-    lualine_a = {'mode'},
+    lualine_a = { 'mode' },
     lualine_b = {
-      {'branch', icon=""},
+      { 'branch', icon = "" },
       {
         'diff',
-        source=diff_source,
-        symbols = {added = ' ', modified = ' ', removed = ' '},
+        source = diff_source,
+        symbols = { added = ' ', modified = ' ', removed = ' ' },
       },
     },
-    lualine_c = {'filename'},
+    lualine_c = { 'filename' },
     lualine_x = {
       {
         'diagnostics',
-        symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '},
+        symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
       },
       'encoding',
       'fileformat',
-      'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
+      'filetype' },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' }
   },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
+    lualine_c = { 'filename' },
+    lualine_x = { 'location' },
     lualine_y = {},
     lualine_z = {}
   },
