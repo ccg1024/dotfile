@@ -2,12 +2,6 @@
 vim.opt.background = "dark"
 vim.opt.termguicolors = true
 
---gruvbox
-vim.g.gruvbox_contrast_dark = 'dark'
-vim.g.gruvbox_sign_column = 'bg0'
--- vim.cmd('colorscheme catppuccin')
-
-
 -- nomal set
 vim.opt.number = true
 vim.opt.wrap = false

@@ -1,5 +1,0 @@
-require('users.ccg.plugins')
-require('users.ccg.keybindings')
-require('users.ccg.settings')
-require('users.ccg.plugconf')
-require('users.ccg.colorset')

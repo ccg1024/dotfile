@@ -1,17 +1,15 @@
-require("nvim-lsp-installer").setup{}
-
 local lspconfig = require("lspconfig")
-local navic = require("nvim-navic")
+-- local navic = require("nvim-navic")
 
 local function on_attach(client, bufnr) -- set up buffer keymaps, etc.
   -- formatting
   if client.server_capabilities.documentFormattingProvider then
     vim.api.nvim_command [[augroup Format]]
     vim.api.nvim_command [[autocmd! * <buffer>]]
-    vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
+    vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
     vim.api.nvim_command [[augroup END]]
   end
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -23,7 +21,9 @@ local function on_attach(client, bufnr) -- set up buffer keymaps, etc.
   require("illuminate").on_attach(client)
 
   -- nvim-nvic
-  navic.attach(client, bufnr)
+  -- if client.server_capabilities.documentFormattingProvider then
+  -- navic.attach(client, bufnr)
+  -- end
 end
 
 local lsp_flags = {
@@ -34,7 +34,7 @@ local lsp_flags = {
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- start server
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
@@ -44,7 +44,7 @@ lspconfig.sumneko_lua.setup {
         version = 'LuaJIT',
       },
       diagnostics = {
-        globals = {"vim", "packer_bootstrap"},
+        globals = { "vim", "packer_bootstrap" },
       },
       workspace = {
         library = vim.api.nvim_get_runtime_file("", true),
@@ -73,21 +73,21 @@ lspconfig.pyright.setup {
 }
 
 -- c/c++
-lspconfig.clangd.setup{
+lspconfig.clangd.setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities
 }
 
 -- javascript
-lspconfig.tsserver.setup{
+lspconfig.tsserver.setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
 }
 
 -- texlab
-lspconfig.texlab.setup{
+lspconfig.texlab.setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
@@ -103,8 +103,14 @@ lspconfig.texlab.setup{
   root_dir = lspconfig.util.root_pattern("."),
 }
 
+-- astro
+lspconfig.astro.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+}
+
 -- change info style of lsp
 require("lsp.handlers").setup()
 -- start cmp
 require("lsp.cmp")
-

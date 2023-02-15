@@ -66,7 +66,7 @@ cmp.setup {
     completion = {
       border = "rounded",
       -- winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None",
-      winhighlight = myCompleteHighlight,
+      -- winhighlight = myCompleteHighlight,
     },
     -- documentation = cmp.config.window.bordered(),
     documentation = {

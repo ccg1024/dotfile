@@ -34,8 +34,8 @@ require 'telescope'.setup {
     file_browser = {
       path = "%:p:h",
       cwd = telescope_buffer_dir(),
-      respect_git_ignore = false,
-      hidden = true,
+      respect_gitignore = false,
+      hidden = false,
       grouped = true,
       previewer = false,
       initial_mode = "normal",

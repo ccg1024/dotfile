@@ -9,10 +9,16 @@ local function diff_source()
   end
 end
 
+local term_app = os.getenv("IS_ALACRITTY")
+local color_name = 'auto'
+if term_app ~= '1' then
+  color_name = 'solarized_dark'
+end
+
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'auto',
+    theme = color_name,
     component_separators = { left = '', right = '' },
     section_separators = { left = '', right = '' },
     disabled_filetypes = {
@@ -36,6 +42,11 @@ require('lualine').setup {
         'diff',
         source = diff_source,
         symbols = { added = ' ', modified = ' ', removed = ' ' },
+        diff_color = {
+          added    = 'DiffAdd',
+          modified = 'DiffChange',
+          removed  = 'DiffDelete',
+        },
       },
     },
     lualine_c = { 'filename' },

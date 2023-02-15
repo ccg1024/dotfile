@@ -3,7 +3,7 @@
 
 -- local workspace_dir = '/path/to/workspace-root/' .. project_name
 
-local navic = require("nvim-navic")
+-- local navic = require("nvim-navic")
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local function on_attach(client, bufnr) -- set up buffer keymaps, etc.
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
@@ -14,7 +14,7 @@ local function on_attach(client, bufnr) -- set up buffer keymaps, etc.
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   require("illuminate").on_attach(client)
-  navic.attach(client, bufnr)
+  -- navic.attach(client, bufnr)
 end
 
 local config = {

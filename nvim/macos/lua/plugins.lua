@@ -14,7 +14,7 @@ return require('packer').startup(function(use)
   use 'nvim-tree/nvim-web-devicons'
 
   -- lsp
-  use "williamboman/nvim-lsp-installer"
+  -- use "williamboman/nvim-lsp-installer"
   use 'neovim/nvim-lspconfig'
   use 'mfussenegger/nvim-jdtls'
 
@@ -58,13 +58,14 @@ return require('packer').startup(function(use)
   -- some tool
   use { 'tpope/vim-surround' }
   use { 'tpope/vim-commentary' }
-  use { 'kshenoy/vim-signature' }
+  -- use { 'kshenoy/vim-signature' }
   use { "windwp/nvim-autopairs" }
   use 'norcalli/nvim-colorizer.lua'
   use { 'phaazon/hop.nvim', branch = 'v1', }
-  use { 'simrat39/symbols-outline.nvim' } -- vista alternative
+  -- use { 'simrat39/symbols-outline.nvim' } -- vista alternative
+  -- highlight undercusor word
   use { 'RRethy/vim-illuminate' }
-  use { 'SmiteshP/nvim-navic' }
+  -- use { 'SmiteshP/nvim-navic' }
 
   -- git
   use { 'lewis6991/gitsigns.nvim', }

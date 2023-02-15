@@ -2,10 +2,10 @@
 vim.g.mapleader = ' '
 
 -- buffer, table
-vim.api.nvim_set_keymap("n", "<TAB>", ":bn<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-TAB>", ":bp<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "[t", "gT", { noremap = true })
-vim.api.nvim_set_keymap("n", "]t", "gt", { noremap = true })
+-- vim.api.nvim_set_keymap("n", "<TAB>", ":bn<CR>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<S-TAB>", ":bp<CR>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "[t", "gT", { noremap = true })
+-- vim.api.nvim_set_keymap("n", "]t", "gt", { noremap = true })
 
 
 -- Search

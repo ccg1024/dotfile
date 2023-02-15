@@ -14,3 +14,9 @@ Color.new("my_base1", '#1d2021')
 Color.new("my_base2", '#3c3836')
 Group.new("CursorLine", colors.none, colors.my_base1, styles.NONE)
 Group.new("CursorLineNr", colors.orange, colors.none, styles.NONE)
+
+vim.cmd [[
+  hi DiffAdd guifg=#689d6a
+  hi DiffChange guifg=#fabd2f
+  hi DiffDelete guifg=#fb4934
+]]
