@@ -2,17 +2,14 @@
 
 自用的nvim/vim,tmux等相关配置。
 
-**LSP**
+### Iterm
 
-![lsp-img](./img/lsp.png)
+![iterm-nvim](./img/iterm-nvim.png)
 
-**fzf-finder**
+### Alacritty
 
-![fzf](./img/fzf-finder.png)
+![alacritty-nvim](./img/alacritty-nvim.png)
 
-**file-browser**
-
-![browser](./img/file-browser.png)
 
 **!!! 将配置文件转为lua，用nvim自带的lsp替代coc**
 
