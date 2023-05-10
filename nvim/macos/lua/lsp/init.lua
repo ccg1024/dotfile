@@ -85,6 +85,11 @@ lspconfig.tsserver.setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
+  init_options = {
+    preferences = {
+      disableSuggestions = true
+    }
+  }
 }
 
 -- texlab
