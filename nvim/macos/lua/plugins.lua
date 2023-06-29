@@ -41,8 +41,9 @@ return require('packer').startup(function(use)
   use { 'tpope/vim-commentary' }
   -- use { 'kshenoy/vim-signature' }
   use { "windwp/nvim-autopairs" }
+  use { "windwp/nvim-ts-autotag" }
   use 'norcalli/nvim-colorizer.lua'
-  use { 'phaazon/hop.nvim', branch = 'v1', }
+  use { 'phaazon/hop.nvim', branch = 'v2', }
   -- highlight undercusor word
   use { 'RRethy/vim-illuminate' }
 
@@ -65,7 +66,7 @@ return require('packer').startup(function(use)
   -- fuzzy finder
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
-  use { 'nvim-telescope/telescope.nvim' }
+  use { 'nvim-telescope/telescope.nvim', tag = "0.1.1" }
   use {
     "nvim-telescope/telescope-file-browser.nvim",
     requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
@@ -86,6 +87,13 @@ return require('packer').startup(function(use)
     "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim"
   }
+
+  -- null-ls
+  use('jose-elias-alvarez/null-ls.nvim')
+  use('MunifTanjim/prettier.nvim')
+
+  -- bufferline
+  use { 'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons' }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

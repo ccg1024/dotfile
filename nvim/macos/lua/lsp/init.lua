@@ -48,7 +48,6 @@ lspconfig.lua_ls.setup {
       },
       workspace = {
         library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false, -- close the work environemt question
       },
       telemetry = {
         enable = false,
@@ -85,11 +84,6 @@ lspconfig.tsserver.setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
-  init_options = {
-    preferences = {
-      disableSuggestions = true
-    }
-  }
 }
 
 -- texlab
@@ -114,6 +108,18 @@ lspconfig.astro.setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
+}
+
+-- html
+lspconfig.html.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities
+}
+lspconfig.cssls.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities
 }
 
 -- change info style of lsp

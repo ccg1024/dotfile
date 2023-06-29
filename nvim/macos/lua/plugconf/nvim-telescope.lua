@@ -5,6 +5,13 @@ if (not status) then
 end
 local actions = require('telescope.actions')
 
+-- for copy file path
+local action_state = require('telescope.actions.state')
+actions.copy_full_path = function()
+  local symbol = action_state.get_selected_entry().value
+  vim.fn.setreg('+', symbol)
+end
+
 local function telescope_buffer_dir()
   return vim.fn.expand('%:p:h')
 end
@@ -24,6 +31,7 @@ require 'telescope'.setup {
         ['<c-d>'] = actions.delete_buffer,
         ['q'] = actions.close,
         ['l'] = actions.select_default,
+        ['/'] = function() vim.cmd('startinsert') end
       },
       ['i'] = {
         ['<c-d>'] = actions.delete_buffer,
@@ -55,6 +63,7 @@ require 'telescope'.setup {
           ['h'] = fb_actions.goto_parent_dir,
           ['/'] = function() vim.cmd('startinsert') end,
           ['H'] = fb_actions.toggle_hidden,
+          ['Y'] = actions.copy_full_path,
         }
       }
     },
