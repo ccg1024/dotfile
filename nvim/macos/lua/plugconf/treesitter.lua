@@ -12,6 +12,19 @@ require('nvim-treesitter.configs').setup {
   },
   ensure_installed = {
     "tsx",
-    'css'
+    'css',
+    'javascript',
+    'typescript',
+    'tsx',
+    'html',
+    'markdown',
+    'markdown_inline',
+    'query',
+    'vim',
+    'vimdoc',
+    'lua',
+    'yaml'
+    'json'
+    'c'
   }
 }
