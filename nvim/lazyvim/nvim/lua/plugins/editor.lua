@@ -1,5 +1,4 @@
 return {
-
   {
     "telescope.nvim",
     dependencies = {
@@ -157,12 +156,6 @@ return {
         end,
         desc = "Flash",
       },
-    },
-  },
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      inlay_hints = { enabled = false },
     },
   },
 }
