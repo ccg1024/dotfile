@@ -42,3 +42,7 @@ keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()
 end, opts)
 keymap.set("n", ";e", vim.diagnostic.open_float, opts)
+
+-- move selected line
+keymap.set("v", "K", ":m '<-2<CR>gv=gv", opts)
+keymap.set("v", "J", ":m '>+1<CR>gv=gv", opts)

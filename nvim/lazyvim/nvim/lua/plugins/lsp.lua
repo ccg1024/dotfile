@@ -8,9 +8,36 @@ return {
         "luacheck",
         "shellcheck",
         "shfmt",
-        "typescript-language-server",
         "css-lsp",
       })
     end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        vtsls = {
+          settings = {
+            complete_function_calls = false,
+            typescript = {
+              suggest = {
+                completeFunctionCalls = false,
+              },
+              preferences = {
+                jsxAttributeCompletionStyle = "none",
+              },
+            },
+            javascript = {
+              suggest = {
+                completeFunctionCalls = false,
+              },
+              preferences = {
+                jsxAttributeCompletionStyle = "none",
+              },
+            },
+          },
+        },
+      },
+    },
   },
 }
