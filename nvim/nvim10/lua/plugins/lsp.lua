@@ -10,6 +10,7 @@ return {
 				"vtsls",
 				"lua-language-server",
 				"css-lsp",
+				"eslint-lsp",
 			},
 		},
 		keys = {
@@ -94,6 +95,11 @@ return {
 						stylelintplus = {
 							-- see available options in stylelint-lsp documentation
 						},
+					},
+				},
+				eslint = {
+					settings = {
+						workingDirectories = { mode = "auto" },
 					},
 				},
 			},
