@@ -4,16 +4,22 @@ return {
 		priority = 1000,
 		lazy = false,
 		config = function()
-			vim.cmd([[ colorscheme gruvbox ]])
+			-- vim.cmd([[ colorscheme gruvbox ]])
 		end,
 	},
 	{
 		"craftzdog/solarized-osaka.nvim",
 		lazy = false,
 		priority = 1000,
-		config = function()
-			-- vim.cmd([[colorscheme solarized-osaka]])
+		config = function(_, opts)
+			require("solarized-osaka").setup(opts)
+			vim.cmd([[colorscheme solarized-osaka]])
 		end,
-		opts = {},
+		opts = {
+			styles = {
+				keywords = { italic = false },
+				functions = { bold = true },
+			},
+		},
 	},
 }

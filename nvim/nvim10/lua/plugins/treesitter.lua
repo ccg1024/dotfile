@@ -3,7 +3,7 @@ return {
 	branch = "master",
 	lazy = false,
 	build = ":TSUpdate",
-	opts = function()
+	config = function()
 		require("nvim-treesitter.configs").setup({
 			ensure_installed = {
 				"c",
@@ -19,6 +19,9 @@ return {
 			},
 			auto_install = false,
 			highlight = {
+				enable = true,
+			},
+			indent = {
 				enable = true,
 			},
 		})

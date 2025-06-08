@@ -6,7 +6,14 @@ return {
 				theme = "auto",
 			},
 			sections = {
-				lualine_a = { "mode" },
+				lualine_a = {
+					{
+						"mode",
+						color = {
+							gui = "bold",
+						},
+					},
+				},
 				lualine_b = { "branch" },
 				lualine_c = {
 					"filename",
@@ -39,6 +46,14 @@ return {
 								}
 							end
 						end,
+					},
+				},
+				lualine_z = {
+					{
+						"location",
+						color = {
+							gui = "bold",
+						},
 					},
 				},
 			},
